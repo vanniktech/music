@@ -1,0 +1,11 @@
+[versions]
+kotlin = "1.7.21"
+ktlint = "0.47.1"
+
+[libraries]
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
+
+[plugins]
+codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.22.0" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
