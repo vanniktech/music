@@ -1,12 +1,12 @@
 package com.vanniktech.music.mp3.handler
 
+import com.vanniktech.music.Eye3D
 import com.vanniktech.music.mp3.Mp3Attribute
 import com.vanniktech.music.mp3.Mp3AttributeDiff
 import com.vanniktech.music.mp3.Mp3Attributes
 import com.vanniktech.music.mp3.Mp3Tag
 import com.vanniktech.music.takeIfNotBlank
 import java.io.File
-import java.util.concurrent.TimeUnit.SECONDS
 
 internal const val FRONT_COVER = "FRONT_COVER.jpg"
 
@@ -20,20 +20,12 @@ internal class Id3V2Mp3AttributesHandler : Mp3AttributesHandler {
         throw IllegalArgumentException("Failed for ${file.absolutePath}", throwable)
       }
     }
-    id3v2Process.waitFor()
+    require(id3v2Process.waitFor() == 0) {
+      "Error extracting tags from $file"
+    }
 
     return if (attributes == null) {
-      val imageDirectory = file.parentFile
-      val imageCommands = listOf(
-        "eyeD3",
-        "--write-images=$imageDirectory",
-        file.absolutePath,
-      )
-
-      ProcessBuilder(imageCommands).start().waitFor(1, SECONDS)
-
-      val frontCoverFile = file.frontCoverFile()
-      imageDirectory.resolve(FRONT_COVER).renameTo(frontCoverFile)
+      Eye3D.extractImageFrom(file)
 
       Mp3Attributes(
         Mp3Tag.values().map {
@@ -57,24 +49,12 @@ internal class Id3V2Mp3AttributesHandler : Mp3AttributesHandler {
       diff.flatMap { listOf("--${it.tag.id}", it.new.orEmpty()) } +
       file.absolutePath
 
-    val frontCover = file.frontCoverFile()
-    val id3v2Process = ProcessBuilder(id3v2Commands).start()
-
-    id3v2Process.waitFor()
-
-    if (frontCover.exists()) {
-      val imageCommands = listOf(
-        "eyeD3",
-        "--add-image",
-        "${frontCover.absolutePath}:FRONT_COVER",
-        file.absolutePath,
-      )
-      ProcessBuilder(imageCommands).directory(file.parentFile).start().waitFor()
-      frontCover.delete()
+    require(ProcessBuilder(id3v2Commands).start().waitFor() == 0) {
+      "Error writing tags to $file"
     }
-  }
 
-  private fun File.frontCoverFile() = parentFile.resolve("$nameWithoutExtension.jpg")
+    Eye3D.writeImage(file)
+  }
 
   internal fun fromString(text: String): List<Mp3Attribute>? {
     val lines = text.lines()

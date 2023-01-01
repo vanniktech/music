@@ -13,16 +13,10 @@ internal class FileNamePreFileProcessor(
   private var index = 0
 
   override fun process(file: File): File {
-    val extension = file.extension
-    if (extension.equals("wav", ignoreCase = true)) {
-      logger.log("""🛎️""", index = 0, file, """ffmpeg -i "${file.absolutePath}" -vn -ab 320k -ar 44100 -y "${file.parentFile.resolve(file.nameWithoutExtension + "." + FILE_ENDING)}"""")
-    }
-
-    require(extension == FILE_ENDING) { "Invalid extension at $file. Expected $FILE_ENDING" }
-
-    val currentName = file.name
+    require(file.extension == FILE_ENDING) { "Expected $FILE_ENDING. Invalid extension at $file" }
 
     return if (autoCorrect) {
+      val currentName = file.name
       val newName = currentName.autoCorrected()
 
       if (newName != currentName) {

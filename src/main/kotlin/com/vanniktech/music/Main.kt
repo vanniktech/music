@@ -11,6 +11,7 @@ import com.vanniktech.music.mp3.diff
 import com.vanniktech.music.mp3.handler.FRONT_COVER
 import com.vanniktech.music.mp3.handler.Id3V2Mp3AttributesHandler
 import com.vanniktech.music.mp3.processor.file.FileNamePreFileProcessor
+import com.vanniktech.music.mp3.processor.file.WavToMp3FileProcessor
 import com.vanniktech.music.mp3.processor.mp3.MissingPictureTrackMp3Processor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumTrackMismatchMp3AttributesProcessor
@@ -64,6 +65,7 @@ fun main() {
   val attributesHandler = Id3V2Mp3AttributesHandler()
 
   val preFileProcessors = listOf(
+    WavToMp3FileProcessor(logger = logger),
     FileNamePreFileProcessor(logger = logger, autoCorrect = false),
   )
 
@@ -106,13 +108,12 @@ fun main() {
           logger.log("""✅""", index, file, postProcessedAttributes.joinToString())
         }
 
-        Mp3(file, postProcessedAttributes)
+        mp3Processors.fold(Mp3(file, postProcessedAttributes)) { mp3, processor -> processor.process(mp3, index) }
       } catch (inferringException: InferringException) {
         inferringExceptions.add(inferringException)
         null
       }
     }
-    .map { mp3Processors.fold(it) { mp3, processor -> processor.process(mp3) } }
 
   inferringExceptions.forEach { it.printStackTrace() }
 }
