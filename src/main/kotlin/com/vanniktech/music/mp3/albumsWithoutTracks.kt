@@ -7,6 +7,7 @@ internal val albumsWithoutTracks = setOf(
   "6 Jahre Jeden Tag ein Set",
   "Atlant Radio Show",
   "BergWacht",
+  "LDS",
   "Boiler Room",
   "Cercle",
   "Kater Blau",

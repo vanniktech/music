@@ -37,6 +37,8 @@ import java.io.File
  * https://soundcloud.com/search?q=something%20slow%200136
  * https://soundcloud.com/search?q=soulful%20techno%20119
  * https://soundcloud.com/search?q=SVT-Podcast132
+ * https://soundcloud.com/mikehaddad/sets/mikes-sessions
+ * https://soundcloud.com/sunset-grooves/sets/sunset-grooves-podcasts
  */
 fun main() {
   val root = File("/Volumes/Niklas/m/")
