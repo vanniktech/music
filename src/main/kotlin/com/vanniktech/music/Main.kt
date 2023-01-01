@@ -40,6 +40,10 @@ import java.io.File
 fun main() {
   val root = File("/Volumes/Niklas/m/")
   // val root = File("/Users/niklas/Downloads")
+
+  // Clean up left over images.
+  root.listFiles().orEmpty().filter { it.extension in setOf("jpg", "png") }.forEach { it.delete() }
+
   val files = root
     .listFiles()
     .orEmpty()
