@@ -14,6 +14,7 @@ import com.vanniktech.music.specialContains
 import com.vanniktech.music.takeIfNotBlank
 import com.vanniktech.music.track
 import com.vanniktech.music.trackNumberRegex
+import com.vanniktech.music.trim
 import com.vanniktech.music.yearRegex
 import java.io.Serial
 
@@ -60,7 +61,7 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
       3 -> filteredSplits[0]
       4 -> null
       else -> throw InferringException("""Please handle "$name""")
-    }
+    }?.trim("by")?.trim("von")
 
     val title = when (filteredSplits.size) {
       0 -> null

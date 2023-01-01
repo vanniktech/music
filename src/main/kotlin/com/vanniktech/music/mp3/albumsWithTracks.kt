@@ -57,7 +57,7 @@ internal val albumsWithTracks = setOf(
   "Groove Podcast",
   "VIBRATIONS EP",
   "Herzschlag",
-  "Heimlich Podcasts",
+  "Heimlich Podcast",
   "Alter Ego Podcast",
   "LIQUID YOUTH",
   "surfaces Podcast",

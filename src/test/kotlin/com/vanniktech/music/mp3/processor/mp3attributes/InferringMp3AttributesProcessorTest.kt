@@ -174,6 +174,30 @@ class InferringMp3AttributesProcessorTest {
     )
   }
 
+  @Test fun heimlichPodcastNumberOne() {
+    assertEquals(
+      expected = Mp3Attributes(
+        listOf(
+          Mp3Attribute(Mp3Tag.ARTIST, "Oberst & Buchner", inferred = true),
+          Mp3Attribute(Mp3Tag.TITLE, "Heimlich Podcast #1", inferred = true),
+          Mp3Attribute(Mp3Tag.ALBUM, "Heimlich Podcast", inferred = true),
+          Mp3Attribute(Mp3Tag.TRACK, "1", inferred = true),
+          Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
+          Mp3Attribute(Mp3Tag.YEAR, null, inferred = false),
+          Mp3Attribute(Mp3Tag.PICTURE, null, inferred = false),
+          Mp3Attribute(Mp3Tag.COMPOSER, null, inferred = false),
+          Mp3Attribute(Mp3Tag.POSITION, null, inferred = false),
+          Mp3Attribute(Mp3Tag.ARTIST_2, null, inferred = false),
+          Mp3Attribute(Mp3Tag.COMMENTS, null, inferred = false),
+        ),
+      ),
+      actual = processor.process(
+        source = FakeSource("Heimlich Podcast #1 by Oberst & Buchner\n"),
+        attributes = Mp3Attributes(emptyList()),
+      ),
+    )
+  }
+
   @Test fun gabrielAnanda() {
     assertEquals(
       expected = Mp3Attributes(

@@ -88,7 +88,16 @@ internal fun String?.takeIfNotBlank() = takeIf { it?.isNotBlank() == true }
 internal fun String.specialContains(other: String) = contains("$other ") ||
   endsWith(other)
 
-internal fun String.trim(what: String) = removePrefix(what).removeSuffix(what)
+internal fun String.trim(what: String) = removePrefix(what).removePrefix(what.capitalized())
+  .removeSuffix(what).removeSuffix(what.capitalized())
+  .trim()
+
+fun String.capitalized() = replaceFirstChar {
+  when {
+    it.isLowerCase() -> it.titlecase()
+    else -> it.toString()
+  }
+}
 
 internal fun String.autoCorrected() = trim()
   // Fix some dates.

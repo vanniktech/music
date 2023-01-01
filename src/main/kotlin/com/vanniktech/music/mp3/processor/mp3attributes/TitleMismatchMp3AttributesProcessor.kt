@@ -67,9 +67,7 @@ internal class TitleMismatchMp3AttributesProcessor : Mp3AttributesProcessor {
           .replace(REGEX_DOUBLE_SPACINGS, " ")
           .trim("at")
           .trim("by")
-          .trim("By")
           .trim("von")
-          .trim()
 
         modifyAttributes(
           source = source,
