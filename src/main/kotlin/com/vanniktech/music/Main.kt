@@ -30,6 +30,13 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.io.File
 
+/**
+ * To check every now and then:
+ *
+ * https://soundcloud.com/search?q=something%20slow%200136
+ * https://soundcloud.com/search?q=soulful%20techno%20119
+ * https://soundcloud.com/search?q=SVT-Podcast132
+ */
 fun main() {
   val root = File("/Volumes/Niklas/m/")
   // val root = File("/Users/niklas/Downloads")
