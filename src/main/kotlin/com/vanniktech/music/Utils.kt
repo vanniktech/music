@@ -59,7 +59,7 @@ private fun map(mandatory: Boolean, tag: Mp3Tag, value: String?): String? {
   }
 
   if (mandatory) {
-    require(!value.isNullOrBlank()) { "$tag is mandatory" }
+    require(!enhanced.isNullOrBlank()) { "$tag is mandatory" }
   }
 
   return enhanced
