@@ -1,6 +1,7 @@
 package com.vanniktech.music.mp3
 
 internal val genres = setOf(
+  // Old.
   "Ballern [Classics]",
   "Ballern [Gezerre]",
   "Ballern [Hypno]",
@@ -8,10 +9,6 @@ internal val genres = setOf(
   "Chillig",
   "Chillout",
   "Classics",
-  "Different",
-  "Downtempo",
-  "Druck",
-  "Flauschig",
   "Melodic",
   "Mindfuck Hypno",
   "Neo Melodic",
@@ -24,9 +21,18 @@ internal val genres = setOf(
   "Oldschool [Warmup]",
   "Oldschool",
   "Ploppig",
-  "Seelenfutter",
-  "Spacy Indian",
   "Techno",
-  "Uncategorized",
   "Warmup",
+  // Same.
+  "Downtempo",
+  "Different",
+  "Druck",
+  "Flauschig",
+  "Uncategorized",
+  "Spacy Indian",
+  "Seelenfutter",
+  // New.
+  "Traurig",
+  "Oldschool Geil",
+  "Querbeet",
 )

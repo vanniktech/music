@@ -9,11 +9,15 @@ internal class MissingPictureTrackMp3Processor : Mp3Processor {
     setExecutable(true)
   }
 
+  init {
+    file.writeText("")
+  }
+
   override fun process(mp3: Mp3, index: Int): Mp3 {
     if (mp3.attributes.get(Mp3Tag.PICTURE).value.isNullOrBlank()) {
       file.appendText(
         """
-        |./image.sh "${mp3.file.name}" '
+        |./image.sh "${mp3.file.nameWithoutExtension}" '
         |
         """.trimMargin(),
       )

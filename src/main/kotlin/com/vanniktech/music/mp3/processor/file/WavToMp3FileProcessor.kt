@@ -10,8 +10,8 @@ internal class WavToMp3FileProcessor(
   private var index = 0
 
   override fun process(file: File): File {
-    return if (file.extension.equals("wav", ignoreCase = true)) {
-      logger.log("""🚧""", index++, file, """Converting from wav to mp3""")
+    return if (file.extension.equals("wav", ignoreCase = true) || file.extension.equals("m4a", ignoreCase = true)) {
+      logger.log("""🚧""", index++, file, """Converting from ${file.extension} to $FILE_ENDING""")
 
       Eye3D.extractImageFrom(file)
 
@@ -30,7 +30,7 @@ internal class WavToMp3FileProcessor(
       )
 
       require(ProcessBuilder(toMp3Commands).start().waitFor() == 0) {
-        "Error converting $file to wav"
+        "Error converting $file to $FILE_ENDING"
       }
 
       Eye3D.writeImage(mp3)

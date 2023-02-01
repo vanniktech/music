@@ -141,6 +141,7 @@ internal fun String.autoCorrected() = trim()
   // Audio quality.
   .replace("(320kbps)", "")
   // Fix some Artists / Podcasts.
+  .replace("N'to", "NTO", ignoreCase = true)
   .replace("TooL...8", "TooL8", ignoreCase = true)
   .replace("Temo Sayın", "Temo Sayin", ignoreCase = true)
   .replace("Nadīm", "Nadim", ignoreCase = true)
@@ -214,10 +215,12 @@ internal fun String.autoCorrected() = trim()
   .replace("*live", "live")
   .replace("_live", "live")
   .replace("Influenza* ", "Influenza ")
+  .replace("2o15", "2015")
   // Normalize some abbreviations.
   .replace("Live ", "Live ", ignoreCase = true)
   .replace("Live at ", "Live @ ", ignoreCase = true)
   .replace(" w/ ", " with ")
+  .replace("n°", "#")
   .replace("Presents", "presents")
   .replace("Pres.", "presents")
   // Weird spacings / symbols usage.
