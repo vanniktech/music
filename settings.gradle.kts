@@ -5,5 +5,3 @@ pluginManagement {
     gradlePluginPortal()
   }
 }
-
-enableFeaturePreview("VERSION_CATALOGS")
