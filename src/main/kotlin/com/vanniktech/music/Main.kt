@@ -31,16 +31,18 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.io.File
 
+private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
+
 /**
  * To check every now and then:
  *
  * https://soundcloud.com/search?q=something%20slow%200138
  * https://soundcloud.com/search?q=soulful%20techno%20120
- * https://soundcloud.com/search?q=SVT-Podcast132
+ * https://soundcloud.com/search?q=SVT-Podcast134
  * https://soundcloud.com/mikehaddad/sets/mikes-sessions
  * https://soundcloud.com/sunset-grooves/sets/sunset-grooves-podcasts
  * https://soundcloud.com/magicianonduty/sets/journey-series
- * https://soundcloud.com/search?q=traumcast%2036
+ * https://soundcloud.com/search?q=traumcast%2037
  */
 fun main() {
   val root = File("/Volumes/Niklas/m/")
@@ -63,6 +65,9 @@ fun main() {
   val logsDirectory = File("logs/")
   logsDirectory.mkdir()
   val logger = ConsoleLogger(file = logsDirectory.resolve("${now.toEpochMilliseconds()}.log"))
+
+  val androidDiffFile = File("diff.sh")
+  require(!androidDiffFile.exists() || androidDiffFile.length() == 0L) { "diff.sh is not empty, either execute or delete the file" }
 
   val timeZone = TimeZone.currentSystemDefault()
   val localDate = now.toLocalDateTime(timeZone).date
@@ -95,29 +100,51 @@ fun main() {
 
   val inferringExceptions = mutableListOf<InferringException>()
 
+  val androidRemovals = mutableListOf<File>()
+  val androidAdditions = mutableListOf<File>()
+
   files
     .map { preFileProcessors.fold(it) { file, processor -> processor.process(file) } }
-    .mapIndexedNotNull { index, file ->
+    .forEachIndexed { index, file ->
       val initialAttributes = attributesHandler.read(file)
       val source = FileSource(file)
 
       try {
         val postProcessedAttributes = mp3AttributeProcessors.fold(initialAttributes) { attributes, processor -> processor.process(source, attributes) }
         val diff = diff(initialAttributes, postProcessedAttributes)
+        val hasDiff = diff.isNotEmpty()
 
-        if (diff.isNotEmpty()) {
+        if (hasDiff) {
           logger.log("""🔧""", index, file, "changing ${diff.joinToString()}")
           attributesHandler.write(file, diff)
         } else {
           logger.log("""✅""", index, file, postProcessedAttributes.joinToString())
         }
 
-        mp3Processors.fold(Mp3(file, postProcessedAttributes)) { mp3, processor -> processor.process(mp3, index) }
+        val initial = Mp3(file, postProcessedAttributes)
+        val result = mp3Processors.fold(initial) { mp3, processor -> processor.process(mp3, index) }
+
+        if (hasDiff || result != initial) {
+          androidRemovals += file
+          androidAdditions += result.file
+        }
       } catch (inferringException: InferringException) {
         inferringExceptions.add(inferringException)
-        null
       }
     }
+
+  if (androidRemovals.isNotEmpty()) {
+    androidDiffFile.appendText(androidRemovals.joinToString(prefix = "adb shell \"", postfix = "\"\n") { "rm -f '$ANDROID_PATH${it.name}'" })
+  }
+
+  if (androidAdditions.isNotEmpty()) {
+    androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
+  }
+
+  if (androidDiffFile.length() > 0) {
+    androidDiffFile.appendText("rm ${androidDiffFile.absolutePath}")
+    androidDiffFile.setExecutable(true)
+  }
 
   inferringExceptions.forEach { it.printStackTrace() }
 }

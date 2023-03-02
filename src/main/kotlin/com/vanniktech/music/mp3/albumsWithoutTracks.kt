@@ -38,6 +38,7 @@ internal val albumsWithoutTracks = setOf(
   "komm schon Alter VII podcast",
   "My",
   "magical forest",
+  "Magician On Duty",
   // Our own 'albums'.
   "Im Strom der Zeit",
   "Hardtrance",
