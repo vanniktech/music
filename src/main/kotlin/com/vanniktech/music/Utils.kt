@@ -3,6 +3,7 @@ package com.vanniktech.music
 import com.vanniktech.music.mp3.Mp3Attribute
 import com.vanniktech.music.mp3.Mp3Attributes
 import com.vanniktech.music.mp3.Mp3Tag
+import com.vanniktech.music.mp3.SUBTITLE_TODO_PREFIX
 import com.vanniktech.music.mp3.Source
 import com.vanniktech.music.mp3.processor.file.FILE_ENDING
 import java.awt.Toolkit
@@ -78,7 +79,7 @@ internal fun pasteIntoClipboard(text: String) {
 internal val yearRegex = Regex("\\d{4}")
 internal val trackNumberRegex = Regex("(#\\d+)|(\\(\\d+)|( \\d{2,3}(?!(\\d|\\.|-))( |\$))|((?<!\\d)\\d{2,3} )|([A-Z]{3}\\d{2,3})")
 
-internal fun String.track() = trackNumberRegex.findAll(this).firstNotNullOfOrNull { it.value.takeIfNotBlank() }
+internal fun String.track() = trackNumberRegex.findAll(replace(Regex("${SUBTITLE_TODO_PREFIX}\\d{1,3}"), "")).firstNotNullOfOrNull { it.value.takeIfNotBlank() }
 internal fun String.cleanTrack() = filter { it.isDigit() }
   .removePrefix("0")
   .removePrefix("0")

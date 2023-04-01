@@ -23,7 +23,7 @@ internal class GenreMp3AttributesProcessor(
           allAttributes = attributes,
           mandatory = mandatory,
         )
-        require(genres.contains(modified.value)) { "Must be one of ${genres.sorted().joinToString()}" }
+        require(genres.contains(modified.value)) { "Must be one of: ${genres.sorted().joinToString()}" }
         modified
       } else {
         genre

@@ -86,6 +86,7 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
           Mp3Tag.TRACK -> track?.cleanTrack()
           Mp3Tag.GENRE -> genre
           Mp3Tag.TITLE -> title
+          Mp3Tag.SUBTITLE -> null
           Mp3Tag.YEAR -> year
           Mp3Tag.COMMENTS -> null
           Mp3Tag.ARTIST_2 -> null

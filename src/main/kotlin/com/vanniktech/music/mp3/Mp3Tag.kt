@@ -7,6 +7,7 @@ enum class Mp3Tag(
   /** Attributes we want. */
   ARTIST(id = "TPE1"),
   TITLE(id = "TIT2"),
+  SUBTITLE(id = "TIT3"),
   ALBUM(id = "TALB"),
   TRACK(id = "TRCK"),
   GENRE(id = "TCON"),

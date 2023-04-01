@@ -18,37 +18,38 @@ import com.vanniktech.music.trim
 
 internal class TitleMismatchMp3AttributesProcessor : Mp3AttributesProcessor {
   override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes =
-    attributes.map(Mp3Tag.TITLE) { title ->
+    attributes.map(Mp3Tag.TITLE) { attribute ->
       val artist = attributes.get(Mp3Tag.ARTIST)
       val album = attributes.get(Mp3Tag.ALBUM)
       val track = attributes.get(Mp3Tag.TRACK)
       val year = attributes.get(Mp3Tag.YEAR).value
+      val title = attribute.value?.replace(attributes.get(Mp3Tag.SUBTITLE).value?.plus(" - ")?.trim().orEmpty(), "")
 
       val viaAlbum = (albumsWithTracks + albumsWithoutTracks).firstNotNullOfOrNull { value ->
         value.takeIf {
-          title.value?.specialContains(it) == true
+          title?.specialContains(it) == true
         }
       }
       val viaAlbumYearly = albumYearly.firstNotNullOfOrNull { value ->
         "$value $year".takeIf {
           val regex = Regex(it)
-          regex.containsMatchIn(title.value.orEmpty())
+          regex.containsMatchIn(title.orEmpty())
         }
       }
 
-      val isDifferentViaLive = source.name.contains("live", ignoreCase = true) && !source.name.contains("oliver", ignoreCase = true) && !source.name.contains("Elliver", ignoreCase = true) && title.value?.contains("live", ignoreCase = true) == false
-      val isDifferentViaTrack = !track.value.isNullOrBlank() && track.value != title.value?.track()?.cleanTrack()
+      val isDifferentViaLive = source.name.contains("live", ignoreCase = true) && !source.name.contains("oliver", ignoreCase = true) && !source.name.contains("Elliver", ignoreCase = true) && title?.contains("live", ignoreCase = true) == false
+      val isDifferentViaTrack = !track.value.isNullOrBlank() && track.value != title?.track()?.cleanTrack()
       val isDifferentViaAlbum = (viaAlbum ?: viaAlbumYearly) != album.value
-      val containsArtist = title.value?.contains(artist.value!!, ignoreCase = true) == true && artist.value != "Places" && artist.value != "Solstice"
+      val containsArtist = title?.contains(artist.value!!, ignoreCase = true) == true && artist.value != "Places" && artist.value != "Solstice"
       val doesNotContainAlbumTrack = when {
-        album.value != null && !track.value.isNullOrBlank() -> title.value?.contains("${album.value} ${track.value.prependTrack()}") == false
+        album.value != null && !track.value.isNullOrBlank() -> title?.contains("${album.value} ${track.value.prependTrack()}") == false
         else -> false
       }
 
       val isDifferent = (containsArtist || isDifferentViaLive || isDifferentViaAlbum || isDifferentViaTrack || doesNotContainAlbumTrack)
 
       if (isDifferent) {
-        val inferredTitle = title.value.takeIf { isDifferentViaLive && album.value == null }
+        val inferredTitle = title.takeIf { isDifferentViaLive && album.value == null }
         val value = (
           listOfNotNull(
             "Live -".takeIf { inferredTitle != null } ?: "Live @".takeIf { isDifferentViaLive },
@@ -57,7 +58,7 @@ internal class TitleMismatchMp3AttributesProcessor : Mp3AttributesProcessor {
             inferredTitle,
           )
             .joinToString(separator = " ")
-            .takeIfNotBlank() ?: title.value.orEmpty().trim(artist.value.orEmpty())
+            .takeIfNotBlank() ?: title.orEmpty().trim(artist.value.orEmpty())
           )
           .trim()
           .trim("&")
@@ -71,12 +72,12 @@ internal class TitleMismatchMp3AttributesProcessor : Mp3AttributesProcessor {
 
         modifyAttributes(
           source = source,
-          attributes = listOf(title.copy(value = value, inferred = true)),
+          attributes = listOf(attribute.copy(value = value, inferred = true)),
           allAttributes = attributes,
           mandatory = true,
         )
       } else {
-        title
+        attribute
       }
     }
 }

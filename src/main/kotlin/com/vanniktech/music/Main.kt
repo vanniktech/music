@@ -17,11 +17,13 @@ import com.vanniktech.music.mp3.processor.mp3attributes.AlbumMp3AttributesProces
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumTrackMismatchMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.ArtistMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.AutoCorrectMp3AttributesProcessor
+import com.vanniktech.music.mp3.processor.mp3attributes.AutocorrectSubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.ClearMp3TagsAttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.GenreMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.InferringException
 import com.vanniktech.music.mp3.processor.mp3attributes.InferringMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.RenameMp3AttributesProcessor
+import com.vanniktech.music.mp3.processor.mp3attributes.SubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TitleMismatchMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TrackMp3AttributesProcessor
@@ -36,8 +38,13 @@ private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 /**
  * To check every now and then:
  *
+ * https://soundcloud.com/dekunstenaar/sets/just-me-with-my-music-sets
+ * https://soundcloud.com/dekunstenaar/sets/mood-of-the-day-sets
+ * https://soundcloud.com/hekske/sets/guest-witches-wizards-1
+ * https://soundcloud.com/husasounds/sets/hs-series
  * https://soundcloud.com/magicianonduty/sets/journey-series
  * https://soundcloud.com/mikehaddad/sets/mikes-sessions
+ * https://soundcloud.com/mousikerecords/sets/podcasts
  * https://soundcloud.com/rolandsons-seasidetrip
  * https://soundcloud.com/search?q=SVT-Podcast134
  * https://soundcloud.com/search?q=afterlife%20voyage%20027
@@ -87,12 +94,14 @@ fun main() {
     InferringMp3AttributesProcessor(),
     ArtistMp3AttributesProcessor(),
     TitleMp3AttributesProcessor(),
+    AutocorrectSubtitleMp3AttributesProcessor(),
     AlbumMp3AttributesProcessor(),
     TrackMp3AttributesProcessor(),
     GenreMp3AttributesProcessor(mandatory = mandatory),
     YearMp3AttributesProcessor(localDate = localDate, mandatory = mandatory),
     AlbumTrackMismatchMp3AttributesProcessor(localDate = localDate),
     TitleMismatchMp3AttributesProcessor(),
+    SubtitleMp3AttributesProcessor(),
   )
 
   val mp3Processors = listOf(
@@ -135,17 +144,25 @@ fun main() {
       }
     }
 
-  if (androidRemovals.isNotEmpty()) {
-    androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
+  val hasAndroidRemovals = androidRemovals.isNotEmpty()
+  val hasAndroidAdditions = androidAdditions.isNotEmpty()
+  val willWriteFile = hasAndroidRemovals || hasAndroidAdditions
+
+  if (willWriteFile) {
+    androidDiffFile.appendText("#!/bin/bash\nset -e\n\n")
+    androidDiffFile.setExecutable(true)
   }
 
-  if (androidAdditions.isNotEmpty()) {
+  if (hasAndroidRemovals) {
+    androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm '$ANDROID_PATH${it.name}'\"" })
+  }
+
+  if (hasAndroidAdditions) {
     androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
   }
 
   if (androidDiffFile.length() > 0) {
     androidDiffFile.appendText("rm ${androidDiffFile.absolutePath}")
-    androidDiffFile.setExecutable(true)
   }
 
   inferringExceptions.forEach { it.printStackTrace() }

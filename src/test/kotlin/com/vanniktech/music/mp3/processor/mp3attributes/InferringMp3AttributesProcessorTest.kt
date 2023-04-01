@@ -16,6 +16,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, null, inferred = false),
           Mp3Attribute(Mp3Tag.TITLE, null, inferred = false),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -52,6 +53,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Live", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Live 2022", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -76,6 +78,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "live", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "base", inferred = false),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -92,6 +95,7 @@ class InferringMp3AttributesProcessorTest {
         attributes = Mp3Attributes(
           listOf(
             Mp3Attribute(Mp3Tag.TITLE, "base", inferred = false),
+            Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           ),
         ),
       ),
@@ -104,6 +108,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Nils Hoffmann", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Watergate Berlin", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Watergate Berlin", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -128,6 +133,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Acid Pauli & Viken Arman", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Journey to Inaccessible Places @ RAMBALKOSHE", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -156,6 +162,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Miyagi", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Saturday Night Closing Dance", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Skyland 2022", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -180,6 +187,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Oberst & Buchner", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Heimlich Podcast #1", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Heimlich Podcast", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, "1", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -204,6 +212,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Gabriel Ananda", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Mees Salome", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, "72", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, "Techno", inferred = true),
@@ -228,6 +237,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, null, inferred = false),
           Mp3Attribute(Mp3Tag.TITLE, null, inferred = false),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -252,6 +262,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Teho", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Teho Live Colorado Provencal In Rustrel France For Cercle", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Cercle", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -276,6 +287,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Eli", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "metanoia RHYTHM #028", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "metanoia RHYTHM", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, "28", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -300,6 +312,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Janoma", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Mystic Cast #14", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Mystic Cast", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, "14", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -324,6 +337,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "SES", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "SES", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Melodays 2017", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, "Mindfuck Hypno", inferred = true),
@@ -348,6 +362,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "unueberlegt", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Spring Awakening", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "trndmsk Future Stars", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, "6", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, null, inferred = false),
@@ -372,6 +387,7 @@ class InferringMp3AttributesProcessorTest {
         listOf(
           Mp3Attribute(Mp3Tag.ARTIST, "Milo Haefliger", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "The Awakening", inferred = true),
+          Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
           Mp3Attribute(Mp3Tag.GENRE, "Spacy Indian", inferred = true),

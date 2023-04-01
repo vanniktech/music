@@ -12,6 +12,7 @@ internal class UtilsTest {
   }
 
   @Test fun track() {
+    assertEquals(expected = null, actual = "Todo102 - BergWacht Artheater Cologne 07.05.2016".track()?.cleanTrack())
     assertEquals(expected = null, actual = "A Fortego Heartfeels Radioshow 10dens Guest Mix".track()?.cleanTrack())
     assertEquals(expected = "10", actual = "Places #10".track()?.cleanTrack())
     assertEquals(expected = "113", actual = "Montagssorbet 113 mit Laut & Luise".track()?.cleanTrack())

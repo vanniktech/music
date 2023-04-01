@@ -40,6 +40,7 @@ internal class Id3V2Mp3AttributesHandlerTest {
       expected = listOf(
         Mp3Attribute(Mp3Tag.ARTIST, "Frieder", inferred = false),
         Mp3Attribute(Mp3Tag.TITLE, "live│2022", inferred = false),
+        Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
         Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
         Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
         Mp3Attribute(Mp3Tag.GENRE, "Different", inferred = false),
@@ -71,6 +72,7 @@ internal class Id3V2Mp3AttributesHandlerTest {
       expected = listOf(
         Mp3Attribute(Mp3Tag.ARTIST, "BlueMoon", inferred = false),
         Mp3Attribute(Mp3Tag.TITLE, "Progressive - Prog", inferred = false),
+        Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
         Mp3Attribute(Mp3Tag.ALBUM, "Progressive", inferred = false),
         Mp3Attribute(Mp3Tag.TRACK, "0/0", inferred = false),
         Mp3Attribute(Mp3Tag.GENRE, "Progressive", inferred = false),
@@ -107,6 +109,7 @@ internal class Id3V2Mp3AttributesHandlerTest {
       expected = listOf(
         Mp3Attribute(Mp3Tag.ARTIST, "A.D.H.S.", inferred = false),
         Mp3Attribute(Mp3Tag.TITLE, "Grillen auf der Dachterrasse", inferred = false),
+        Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
         Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
         Mp3Attribute(Mp3Tag.TRACK, "0/0", inferred = false),
         Mp3Attribute(Mp3Tag.GENRE, "Oldschool", inferred = false),
