@@ -136,11 +136,11 @@ fun main() {
     }
 
   if (androidRemovals.isNotEmpty()) {
-    androidDiffFile.appendText(androidRemovals.joinToString(prefix = "adb shell \"", postfix = "\"\n") { "rm -f '$ANDROID_PATH${it.name}'" })
+    androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
   }
 
   if (androidAdditions.isNotEmpty()) {
-    androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
+    androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
   }
 
   if (androidDiffFile.length() > 0) {
