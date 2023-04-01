@@ -36,13 +36,15 @@ private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 /**
  * To check every now and then:
  *
- * https://soundcloud.com/search?q=something%20slow%200138
- * https://soundcloud.com/search?q=soulful%20techno%20120
- * https://soundcloud.com/search?q=SVT-Podcast134
- * https://soundcloud.com/mikehaddad/sets/mikes-sessions
- * https://soundcloud.com/sunset-grooves/sets/sunset-grooves-podcasts
  * https://soundcloud.com/magicianonduty/sets/journey-series
- * https://soundcloud.com/search?q=traumcast%2037
+ * https://soundcloud.com/mikehaddad/sets/mikes-sessions
+ * https://soundcloud.com/rolandsons-seasidetrip
+ * https://soundcloud.com/search?q=SVT-Podcast134
+ * https://soundcloud.com/search?q=afterlife%20voyage%20027
+ * https://soundcloud.com/search?q=something%20slow%200139
+ * https://soundcloud.com/search?q=soulful%20techno%20121
+ * https://soundcloud.com/search?q=traumcast%2038
+ * https://soundcloud.com/sunset-grooves/sets/sunset-grooves-podcasts
  */
 fun main() {
   val root = File("/Volumes/Niklas/m/")
