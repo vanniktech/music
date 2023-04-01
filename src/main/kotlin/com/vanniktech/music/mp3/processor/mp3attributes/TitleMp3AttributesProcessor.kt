@@ -15,7 +15,7 @@ internal class TitleMp3AttributesProcessor : Mp3AttributesProcessor {
       if (title.value != null && title.value.contains("#")) {
         val index = title.value.indexOf("#")
 
-        if (title.value.getOrNull(index - 1)?.isLetter() == true) {
+        if (title.value.getOrNull(index - 1)?.isWhitespace() == false) {
           title.copy(value = title.value.take(index) + " " + title.value.drop(index))
         } else {
           title
