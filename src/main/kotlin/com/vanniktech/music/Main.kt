@@ -35,24 +35,6 @@ import java.io.File
 
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 
-/**
- * To check every now and then:
- *
- * https://soundcloud.com/dekunstenaar/sets/just-me-with-my-music-sets
- * https://soundcloud.com/dekunstenaar/sets/mood-of-the-day-sets
- * https://soundcloud.com/hekske/sets/guest-witches-wizards-1
- * https://soundcloud.com/husasounds/sets/hs-series
- * https://soundcloud.com/magicianonduty/sets/journey-series
- * https://soundcloud.com/mikehaddad/sets/mikes-sessions
- * https://soundcloud.com/mousikerecords/sets/podcasts
- * https://soundcloud.com/rolandsons-seasidetrip
- * https://soundcloud.com/search?q=SVT-Podcast134
- * https://soundcloud.com/search?q=afterlife%20voyage%20027
- * https://soundcloud.com/search?q=something%20slow%200139
- * https://soundcloud.com/search?q=soulful%20techno%20121
- * https://soundcloud.com/search?q=traumcast%2038
- * https://soundcloud.com/sunset-grooves/sets/sunset-grooves-podcasts
- */
 fun main() {
   val root = File("/Volumes/Niklas/m/")
   // val root = File("/Users/niklas/Downloads")
