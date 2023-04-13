@@ -142,6 +142,7 @@ internal fun String.autoCorrected() = trim()
   // Audio quality.
   .replace("(320kbps)", "")
   // Fix some Artists / Podcasts.
+  .replace("Artišoko", "Artisoko", ignoreCase = true)
   .replace("N'to", "NTO", ignoreCase = true)
   .replace("TooL...8", "TooL8", ignoreCase = true)
   .replace("Temo Sayın", "Temo Sayin", ignoreCase = true)
@@ -227,6 +228,7 @@ internal fun String.autoCorrected() = trim()
   .replace("Presents", "presents")
   .replace("Pres.", "presents")
   // Weird spacings / symbols usage.
+  .replace("-  ", "- ")
   .replace(" • ", " ")
   .replace(" - .mp3", ".mp3")
   .replace(" -.mp3", ".mp3")
@@ -245,6 +247,13 @@ internal fun String.autoCorrected() = trim()
   .replace(" — .mp3", ".mp3")
   .replace(" —.mp3", ".mp3")
   .replace("\"\"", "")
+  // Remove invalid characters.
+  .replace("!", "")
+  .replace("~", "")
+  .replace("❖", "")
+  .replace("+", "")
+  .replace("☆", "")
+  .replace("""🌀""", "")
   .map {
     when (it) {
       // Normal characters.
@@ -252,7 +261,7 @@ internal fun String.autoCorrected() = trim()
       // Special.
       ' ', '.', '#', '-', ',', '@', '&', '\'', '[', ']' -> it.toString()
       // Special umlauts.
-      'ë', 'Î', 'Â', 'Ø', 'é', 'è', 'á', 'Ó', 'š', 'ø', 'í', 'ó', 'ß', 'Ф', 'у', 'з', 'и', 'о', 'н' -> it.toString()
+      'ë', 'Î', 'Â', 'Ø', 'é', 'è', 'á', 'Ó', 'š', 'ø', 'í', 'ó', 'ß', 'Ф', 'у', 'з', 'и', 'о', 'н', 'ē' -> it.toString()
       // Autocorrect some.
       'ä' -> "ae"
       'ö' -> "oe"

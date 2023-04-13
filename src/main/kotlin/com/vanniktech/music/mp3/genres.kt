@@ -9,23 +9,24 @@ internal val genres = setOf(
   "Oldschool Melodic",
   "Oldschool Warmup",
   "Ballern",
-  "Oldschool",
-  "Warmup",
+  "Uncategorized",
+  "Spacy Indian",
   // New.
-  "Chillig",
-  "Chillout",
+  "Chillig", // Maybe use Slow instead?
+  "Chillout", // What's the difference to Downtempo?
   "Different",
   "Downtempo",
-  "Flauschig",
+  "Flauschig", // Maybe convert to a subtitle?
   "Mindfuck Hypno",
-  "Neo Melodic",
+  "Hypno",
+  "Neo Melodic", // Ralf Volker / Blue Moon only.
   "Oldschool Melodic",
-  "Ploppig",
-  "Seelenfutter",
+  "Oldschool",
+  "Ploppig", // Maybe convert to a subtitle?
+  "Seelenfutter", // Maybe convert to a subtitle?
   "Slow",
-  "Spacy Indian",
   "Tech House",
   "Techno",
   "Trance Classics",
-  "Uncategorized",
+  "Warmup", // Remnants.
 )
