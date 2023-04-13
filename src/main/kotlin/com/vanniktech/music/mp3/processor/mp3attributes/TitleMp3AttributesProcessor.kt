@@ -9,11 +9,13 @@ import com.vanniktech.music.mp3.map
 import com.vanniktech.music.mp3.subtitles
 
 internal fun subtitlesFromTitle(title: String?) = title
-  ?.split("-")
+  ?.split(TITLE_SUBTITLE_DELIMITER)
   ?.firstOrNull()
   ?.trim()
-  ?.split(SUBTITLE_DELIMITER)
+  ?.split(SUBTITLE_SEPARATOR)
   .orEmpty()
+  .sorted()
+  .distinct()
 
 internal class TitleMp3AttributesProcessor : Mp3AttributesProcessor {
   override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes =
