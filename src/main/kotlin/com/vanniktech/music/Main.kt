@@ -69,7 +69,7 @@ fun main() {
     FileNamePreFileProcessor(logger = logger, autoCorrect = false),
   )
 
-  val mandatory = root.absolutePath.contains("Downloads")
+  val isDownloads = root.absolutePath.contains("Downloads")
   val mp3AttributeProcessors = listOf(
     ClearMp3TagsAttributesProcessor(tags = setOf(COMMENTS, COMPOSER, ARTIST_2, POSITION)),
     AutoCorrectMp3AttributesProcessor(),
@@ -79,8 +79,8 @@ fun main() {
     AutocorrectSubtitleMp3AttributesProcessor(),
     AlbumMp3AttributesProcessor(),
     TrackMp3AttributesProcessor(),
-    GenreMp3AttributesProcessor(mandatory = mandatory),
-    YearMp3AttributesProcessor(localDate = localDate, mandatory = mandatory),
+    GenreMp3AttributesProcessor(mandatory = isDownloads),
+    YearMp3AttributesProcessor(localDate = localDate, mandatory = isDownloads),
     AlbumTrackMismatchMp3AttributesProcessor(localDate = localDate),
     TitleMismatchMp3AttributesProcessor(),
     SubtitleMp3AttributesProcessor(),
@@ -126,25 +126,27 @@ fun main() {
       }
     }
 
-  val hasAndroidRemovals = androidRemovals.isNotEmpty()
-  val hasAndroidAdditions = androidAdditions.isNotEmpty()
-  val willWriteFile = hasAndroidRemovals || hasAndroidAdditions
+  if (!isDownloads) {
+    val hasAndroidRemovals = androidRemovals.isNotEmpty()
+    val hasAndroidAdditions = androidAdditions.isNotEmpty()
+    val willWriteFile = hasAndroidRemovals || hasAndroidAdditions
 
-  if (willWriteFile) {
-    androidDiffFile.appendText("#!/bin/bash\nset -e\n\n")
-    androidDiffFile.setExecutable(true)
-  }
+    if (willWriteFile) {
+      androidDiffFile.appendText("#!/bin/bash\nset -e\n\n")
+      androidDiffFile.setExecutable(true)
+    }
 
-  if (hasAndroidRemovals) {
-    androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm '$ANDROID_PATH${it.name}'\"" })
-  }
+    if (hasAndroidRemovals) {
+      androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm '$ANDROID_PATH${it.name}'\"" })
+    }
 
-  if (hasAndroidAdditions) {
-    androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
-  }
+    if (hasAndroidAdditions) {
+      androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
+    }
 
-  if (androidDiffFile.length() > 0) {
-    androidDiffFile.appendText("rm ${androidDiffFile.absolutePath}")
+    if (androidDiffFile.length() > 0) {
+      androidDiffFile.appendText("rm ${androidDiffFile.absolutePath}")
+    }
   }
 
   inferringExceptions.forEach { it.printStackTrace() }
