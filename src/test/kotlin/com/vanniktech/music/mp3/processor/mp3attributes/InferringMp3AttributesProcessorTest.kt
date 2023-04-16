@@ -213,7 +213,7 @@ class InferringMp3AttributesProcessorTest {
           Mp3Attribute(Mp3Tag.ARTIST, "Gabriel Ananda", inferred = true),
           Mp3Attribute(Mp3Tag.TITLE, "Mees Salome", inferred = true),
           Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
-          Mp3Attribute(Mp3Tag.ALBUM, null, inferred = false),
+          Mp3Attribute(Mp3Tag.ALBUM, "Soulful Techno", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, "72", inferred = true),
           Mp3Attribute(Mp3Tag.GENRE, "Techno", inferred = true),
           Mp3Attribute(Mp3Tag.YEAR, null, inferred = false),

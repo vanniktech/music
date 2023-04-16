@@ -29,7 +29,7 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
     val name = source.name
     val track = name.track()
     val album = albumsWithoutTracks.firstOrNull { name.specialContains(it) }
-      ?: albumsWithTracks.firstOrNull { name.contains("$it $track") }
+      ?: albumsWithTracks.firstOrNull { name.specialContains(it) }
       ?: albumYearly.firstNotNullOfOrNull {
         Regex("$it [\\d]{4}").findAll(name).firstOrNull()?.value
       }
