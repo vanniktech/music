@@ -5,20 +5,24 @@ const val SUBTITLE_TODO_PREFIX = "Todo"
 internal val subtitles = listOf(
   "Ballern", // Pushing forward.
   "Crazy", // Only sometimes good.
+  "Crowds", // Good for the crowds when listening with others.
   "Dream", // Max Cooper like.
   "Duduk", // Amazing instrument.
   "Duester", // Mysterious.
+  "Flauschig", // Hrhr.
   "Gaensehaut", // Sets the mood.
   "Geil", // Amazing.
+  "Gezerre", // Holy.
   "Good", // Just good.
   "Groovy", // Just good groves.
   "Hypno", // Dreaming.
-  "Intro", // Has a fucking good intro.
+  "Intro", // Has a rizz intro.
   "Laessig", // Nice in the background.
   "Oriental", // Arabic / Spacy / whatever.
-  "Outro", // Has a fucking good outro.
+  "Outro", // Has a rizz outro.
   "Pushy", // One below Ballern, but aspiring to be.
   "Random", // A bit of everything!
+  "Sleep", // Predestined for falling asleep.
   "Treibend", // Continuous good flow.
   "Viby", // Just good vibes, more pushing than Groovy though!
   "Vocals", // Lots of vocals.

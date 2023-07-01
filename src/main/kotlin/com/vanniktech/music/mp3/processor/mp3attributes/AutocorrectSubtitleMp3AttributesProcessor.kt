@@ -11,7 +11,7 @@ const val TITLE_SUBTITLE_DELIMITER = "-"
 internal class AutocorrectSubtitleMp3AttributesProcessor : Mp3AttributesProcessor {
   override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes {
     return attributes.map(Mp3Tag.SUBTITLE) { attribute ->
-      attribute.copy(value = attribute.value?.split(SUBTITLE_SEPARATOR)?.sorted()?.joinToString(separator = SUBTITLE_SEPARATOR))
+      attribute.copy(value = attribute.value?.split(SUBTITLE_SEPARATOR)?.sorted()?.joinToString(separator = SUBTITLE_SEPARATOR) { it.trim() })
     }
   }
 }

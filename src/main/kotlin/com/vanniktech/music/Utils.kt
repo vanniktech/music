@@ -86,8 +86,8 @@ internal fun String.cleanTrack() = filter { it.isDigit() }
 
 internal fun String?.takeIfNotBlank() = takeIf { it?.isNotBlank() == true }
 
-internal fun String.specialContains(other: String) = contains("$other ") ||
-  endsWith(other)
+internal fun String.specialContains(other: String) = contains(" $other ") ||
+  endsWith(" $other") || startsWith("$other ")
 
 internal fun String.trim(what: String) = removePrefix(what).removePrefix(what.capitalized())
   .removeSuffix(what).removeSuffix(what.capitalized())
@@ -99,7 +99,6 @@ fun String.capitalized() = replaceFirstChar {
     else -> it.toString()
   }
 }
-
 internal fun String.autoCorrected() = trim()
   // Fix some dates.
   .replace(" January, ", ".01.", ignoreCase = true)
@@ -142,6 +141,9 @@ internal fun String.autoCorrected() = trim()
   // Audio quality.
   .replace("(320kbps)", "")
   // Fix some Artists / Podcasts.
+  .replace("súlfur", "sulfur", ignoreCase = true)
+  .replace("Hrααch", "Hraach", ignoreCase = true)
+  .replace("Mușză", "Musza", ignoreCase = true)
   .replace("Artišoko", "Artisoko", ignoreCase = true)
   .replace("N'to", "NTO", ignoreCase = true)
   .replace("TooL...8", "TooL8", ignoreCase = true)
@@ -198,6 +200,7 @@ internal fun String.autoCorrected() = trim()
   .replace("MOLO", "MOLØ", ignoreCase = false)
   .replace("Bloom", "Bloom", ignoreCase = false)
   .replace("Marc DePulse", "Marc DePulse", ignoreCase = true)
+  .replace("Marc De Pulse", "Marc DePulse", ignoreCase = true)
   .replace("Prince of Denmark", "Prince of Denmark", ignoreCase = true)
   .replace("Sebastian Mullaert", "Sebastian Mullaert", ignoreCase = true)
   .replace("Township Rebellion", "Township Rebellion", ignoreCase = true)
@@ -247,6 +250,7 @@ internal fun String.autoCorrected() = trim()
   .replace(" — .mp3", ".mp3")
   .replace(" —.mp3", ".mp3")
   .replace("\"\"", "")
+  .replace("Café", "Cafe")
   // Remove invalid characters.
   .replace("!", "")
   .replace("~", "")
@@ -273,9 +277,10 @@ internal fun String.autoCorrected() = trim()
       '´', '’' -> '\''
       // Ignore them.
       '(', ')' -> ""
-      else -> error("""Invalid '$it' (code=${it.code}) in "$this"""")
+      else -> error("""Invalid "$it" (code=${it.code}) in "$this"""")
     }
   }
   .joinToString(separator = "")
   .replace(REGEX_DOUBLE_SPACINGS, " ")
   .trim()
+

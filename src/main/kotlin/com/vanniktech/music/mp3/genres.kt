@@ -11,19 +11,23 @@ internal val genres = setOf(
   "Ballern",
   "Uncategorized",
   "Spacy Indian",
+  "Seelenfutter", // Convert to a subtitle!
   // New.
+  "Ambient", // Moby.
   "Chillig", // Maybe use Slow instead?
   "Chillout", // What's the difference to Downtempo?
   "Different",
   "Downtempo",
   "Flauschig", // Maybe convert to a subtitle?
-  "Mindfuck Hypno",
+  "Flow", // Slow is slow as in Beats Per Minute, Flow is similar tune but regular, for instance, Christian Loeffler / Stimming / Aparde.
   "Hypno",
+  "Melodic Techno",
+  "Mindfuck Hypno",
   "Neo Melodic", // Ralf Volker / Blue Moon only.
   "Oldschool Melodic",
   "Oldschool",
+  "Piano", // Derb.
   "Ploppig", // Maybe convert to a subtitle?
-  "Seelenfutter", // Maybe convert to a subtitle?
   "Slow",
   "Tech House",
   "Techno",
