@@ -283,4 +283,3 @@ internal fun String.autoCorrected() = trim()
   .joinToString(separator = "")
   .replace(REGEX_DOUBLE_SPACINGS, " ")
   .trim()
-

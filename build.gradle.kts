@@ -28,7 +28,6 @@ rootProject.configure<com.vanniktech.code.quality.tools.CodeQualityToolsPluginEx
 
 repositories {
   mavenCentral()
-  mavenLocal()
 }
 
 application {
