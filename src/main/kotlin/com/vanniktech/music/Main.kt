@@ -36,8 +36,8 @@ import java.io.File
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 
 fun main() {
-  val root = File("/Volumes/Niklas/m/")
-  // val root = File("/Users/niklas/Downloads")
+  // val root = File("/Volumes/Niklas/m/")
+  val root = File("/Users/niklas/Downloads")
 
   // Clean up left over images.
   root.listFiles().orEmpty().filter { it.extension in setOf("jpg", "png") }.forEach { it.delete() }
@@ -137,11 +137,11 @@ fun main() {
     }
 
     if (hasAndroidRemovals) {
-      androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm '$ANDROID_PATH${it.name}'\"" })
+      androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb -d shell \"rm '$ANDROID_PATH${it.name}'\"" })
     }
 
     if (hasAndroidAdditions) {
-      androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push '${it.absolutePath}' '$ANDROID_PATH'" })
+      androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb -d push '${it.absolutePath}' '$ANDROID_PATH'" })
     }
 
     if (androidDiffFile.length() > 0) {

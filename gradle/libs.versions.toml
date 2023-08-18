@@ -1,11 +1,11 @@
 [versions]
-kotlin = "1.8.22"
-ktlint = "0.47.1"
+kotlin = "1.9.0"
+ktlint = "0.50.0"
 
 [libraries]
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 
 [plugins]
-codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.22.0" }
+codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.23.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
