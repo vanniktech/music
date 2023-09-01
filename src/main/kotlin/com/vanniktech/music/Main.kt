@@ -20,7 +20,7 @@ import com.vanniktech.music.mp3.processor.mp3attributes.AutoCorrectMp3Attributes
 import com.vanniktech.music.mp3.processor.mp3attributes.AutocorrectSubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.ClearMp3TagsAttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.GenreMp3AttributesProcessor
-import com.vanniktech.music.mp3.processor.mp3attributes.InferringException
+import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
 import com.vanniktech.music.mp3.processor.mp3attributes.InferringMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.RenameMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.SubtitleMp3AttributesProcessor
@@ -34,6 +34,7 @@ import kotlinx.datetime.toLocalDateTime
 import java.io.File
 
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
+private const val GOOGLE_DRIVE_DIRECTORY = "\$GOOGLE_DRIVE/m/"
 
 fun main() {
   // val root = File("/Volumes/Niklas/m/")
@@ -57,8 +58,8 @@ fun main() {
   logsDirectory.mkdir()
   val logger = ConsoleLogger(file = logsDirectory.resolve("${now.toEpochMilliseconds()}.log"))
 
-  val androidDiffFile = File("diff.sh")
-  require(!androidDiffFile.exists() || androidDiffFile.length() == 0L) { "diff.sh is not empty, either execute or delete the file" }
+  val diffFile = File("diff.sh")
+  require(!diffFile.exists() || diffFile.length() == 0L) { "diff.sh is not empty, either execute or delete the file" }
 
   val timeZone = TimeZone.currentSystemDefault()
   val localDate = now.toLocalDateTime(timeZone).date
@@ -91,10 +92,10 @@ fun main() {
     RenameMp3AttributesProcessor(logger = logger),
   )
 
-  val inferringExceptions = mutableListOf<InferringException>()
+  val recoverableExceptions = mutableListOf<RecoverableException>()
 
-  val androidRemovals = mutableListOf<File>()
-  val androidAdditions = mutableListOf<File>()
+  val fileRemovals = mutableListOf<File>()
+  val fileAdditions = mutableListOf<File>()
 
   files
     .map { preFileProcessors.fold(it) { file, processor -> processor.process(file) } }
@@ -118,36 +119,38 @@ fun main() {
         val result = mp3Processors.fold(initial) { mp3, processor -> processor.process(mp3, index) }
 
         if (hasDiff || result != initial) {
-          androidRemovals += file
-          androidAdditions += result.file
+          fileRemovals += file
+          fileAdditions += result.file
         }
-      } catch (inferringException: InferringException) {
-        inferringExceptions.add(inferringException)
+      } catch (recoverableException: RecoverableException) {
+        recoverableExceptions.add(recoverableException)
       }
     }
 
   if (!isDownloads) {
-    val hasAndroidRemovals = androidRemovals.isNotEmpty()
-    val hasAndroidAdditions = androidAdditions.isNotEmpty()
-    val willWriteFile = hasAndroidRemovals || hasAndroidAdditions
+    val hasRemovals = fileRemovals.isNotEmpty()
+    val hasAdditions = fileAdditions.isNotEmpty()
+    val willWriteFile = hasRemovals || hasAdditions
 
     if (willWriteFile) {
-      androidDiffFile.appendText("#!/bin/bash\nset -e\n\n")
-      androidDiffFile.setExecutable(true)
+      diffFile.appendText("#!/bin/bash\nset -e\n\n")
+      diffFile.setExecutable(true)
     }
 
-    if (hasAndroidRemovals) {
-      androidDiffFile.appendText(androidRemovals.joinToString(postfix = "\n", separator = "\n") { "adb -d shell \"rm '$ANDROID_PATH${it.name}'\"" })
+    if (hasRemovals) {
+      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
+      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "rm -f \"$GOOGLE_DRIVE_DIRECTORY${it.name}\"" })
     }
 
-    if (hasAndroidAdditions) {
-      androidDiffFile.appendText(androidAdditions.joinToString(postfix = "\n", separator = "\n") { "adb -d push '${it.absolutePath}' '$ANDROID_PATH'" })
+    if (hasAdditions) {
+      diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push \"${it.absolutePath}\" \"$ANDROID_PATH\"" })
+      diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "cp \"${it.absolutePath}\" \"$GOOGLE_DRIVE_DIRECTORY\"" })
     }
 
-    if (androidDiffFile.length() > 0) {
-      androidDiffFile.appendText("rm ${androidDiffFile.absolutePath}")
+    if (diffFile.length() > 0) {
+      diffFile.appendText("rm ${diffFile.absolutePath}")
     }
   }
 
-  inferringExceptions.forEach { it.printStackTrace() }
+  recoverableExceptions.forEach { it.printStackTrace() }
 }

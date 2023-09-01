@@ -6,6 +6,7 @@ import com.vanniktech.music.mp3.Mp3Tag
 import com.vanniktech.music.mp3.SUBTITLE_TODO_PREFIX
 import com.vanniktech.music.mp3.Source
 import com.vanniktech.music.mp3.processor.file.FILE_ENDING
+import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.time.LocalDate
@@ -251,6 +252,9 @@ internal fun String.autoCorrected() = trim()
   .replace(" —.mp3", ".mp3")
   .replace("\"\"", "")
   .replace("Café", "Cafe")
+  // Fix some accents.
+  .replace("""é""", """é""")
+  .replace("""è""", """è""")
   // Remove invalid characters.
   .replace("!", "")
   .replace("~", "")
@@ -265,7 +269,7 @@ internal fun String.autoCorrected() = trim()
       // Special.
       ' ', '.', '#', '-', ',', '@', '&', '\'', '[', ']' -> it.toString()
       // Special umlauts.
-      'ë', 'Î', 'Â', 'Ø', 'é', 'è', 'á', 'Ó', 'š', 'ø', 'í', 'ó', 'ß', 'Ф', 'у', 'з', 'и', 'о', 'н', 'ē', 'ô' -> it.toString()
+      'ú', 'ç', 'ã', 'â', 'ë', 'Î', 'Â', 'Ø', 'é', 'è', 'á', 'Ó', 'š', 'ø', 'í', 'ó', 'ß', 'Ф', 'у', 'з', 'и', 'о', 'н', 'ē', 'ô' -> it.toString()
       // Autocorrect some.
       'ä' -> "ae"
       'ö' -> "oe"
@@ -277,7 +281,7 @@ internal fun String.autoCorrected() = trim()
       '´', '’' -> '\''
       // Ignore them.
       '(', ')' -> ""
-      else -> error("""Invalid "$it" (code=${it.code}) in "$this"""")
+      else -> throw RecoverableException("""Invalid "$it" (code=${it.code}) in "$this"""")
     }
   }
   .joinToString(separator = "")

@@ -18,7 +18,7 @@ import com.vanniktech.music.trim
 import com.vanniktech.music.yearRegex
 import java.io.Serial
 
-internal class InferringException(override val message: String) : IllegalStateException() {
+internal class RecoverableException(override val message: String) : IllegalStateException() {
   companion object {
     @Serial private const val serialVersionUID: Long = -7092876544398384715L
   }
@@ -60,7 +60,7 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
       2 -> filteredSplits[0]
       3 -> filteredSplits[0]
       4 -> null
-      else -> throw InferringException("""Please handle "$name""")
+      else -> throw RecoverableException("""Please handle "$name""")
     }?.trim("by")?.trim("von")
 
     val title = when (filteredSplits.size) {
@@ -75,7 +75,7 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
       2 -> filteredSplits[1]
       3 -> filteredSplits[2]
       4 -> null
-      else -> throw InferringException("""Please handle "$name""")
+      else -> throw RecoverableException("""Please handle "$name""")
     }
 
     return Mp3Attributes(
