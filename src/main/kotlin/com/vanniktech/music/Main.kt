@@ -20,8 +20,8 @@ import com.vanniktech.music.mp3.processor.mp3attributes.AutoCorrectMp3Attributes
 import com.vanniktech.music.mp3.processor.mp3attributes.AutocorrectSubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.ClearMp3TagsAttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.GenreMp3AttributesProcessor
-import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
 import com.vanniktech.music.mp3.processor.mp3attributes.InferringMp3AttributesProcessor
+import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
 import com.vanniktech.music.mp3.processor.mp3attributes.RenameMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.SubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TitleMismatchMp3AttributesProcessor
