@@ -20,9 +20,9 @@ internal val genres = setOf(
   "Downtempo",
   "Flauschig", // Maybe convert to a subtitle?
   "Flow", // Slow is slow as in Beats Per Minute, Flow is similar tune but regular, for instance, Christian Loeffler / Stimming / Aparde.
-  "Mindfuck Hypno",
   "Hypno",
   "Melodic Techno",
+  "Mindfuck Hypno",
   "Neo Melodic", // Ralf Volker / Blue Moon only.
   "Oldschool Melodic",
   "Oldschool",
@@ -32,5 +32,6 @@ internal val genres = setOf(
   "Tech House",
   "Techno",
   "Trance Classics",
+  "Uta",
   "Warmup", // Remnants.
 )

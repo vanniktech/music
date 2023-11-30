@@ -22,6 +22,7 @@ internal val subtitles = listOf(
   "Outro", // Has a rizz outro.
   "Pushy", // One below Ballern, but aspiring to be.
   "Random", // A bit of everything!
+  "Seele", // For the soul.
   "Sleep", // Predestined for falling asleep.
   "Treibend", // Continuous good flow.
   "Viby", // Just good vibes, more pushing than Groovy though!

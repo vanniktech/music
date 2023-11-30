@@ -29,6 +29,7 @@ internal val albumYearly = setOf(
   "Time Warp",
   "Tomorrowland",
   "Wilde Moehre Festival",
+  "Zugvøgel Festival",
   "camp cosmic",
   "Фузион",
 )
