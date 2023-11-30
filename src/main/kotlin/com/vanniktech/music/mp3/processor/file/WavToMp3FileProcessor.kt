@@ -9,36 +9,34 @@ internal class WavToMp3FileProcessor(
 ) : PreFileProcessor {
   private var index = 0
 
-  override fun process(file: File): File {
-    return if (file.extension.equals("wav", ignoreCase = true) || file.extension.equals("m4a", ignoreCase = true)) {
-      logger.log("""🚧""", index++, file, """Converting from ${file.extension} to $FILE_ENDING""")
+  override fun process(file: File): File = if (file.extension.equals("wav", ignoreCase = true) || file.extension.equals("m4a", ignoreCase = true)) {
+    logger.log("""🚧""", index++, file, """Converting from ${file.extension} to $FILE_ENDING""")
 
-      Eye3D.extractImageFrom(file)
+    Eye3D.extractImageFrom(file)
 
-      val mp3 = file.parentFile.resolve(file.nameWithoutExtension + "." + FILE_ENDING)
-      val toMp3Commands = listOf(
-        "ffmpeg",
-        "-i",
-        file.absolutePath,
-        "-vn",
-        "-ab",
-        "320k",
-        "-ar",
-        "44100",
-        "-y",
-        mp3.absolutePath,
-      )
+    val mp3 = file.parentFile.resolve(file.nameWithoutExtension + "." + FILE_ENDING)
+    val toMp3Commands = listOf(
+      "ffmpeg",
+      "-i",
+      file.absolutePath,
+      "-vn",
+      "-ab",
+      "320k",
+      "-ar",
+      "44100",
+      "-y",
+      mp3.absolutePath,
+    )
 
-      require(ProcessBuilder(toMp3Commands).start().waitFor() == 0) {
-        "Error converting $file to $FILE_ENDING"
-      }
-
-      Eye3D.writeImage(mp3)
-
-      file.delete()
-      mp3
-    } else {
-      file
+    require(ProcessBuilder(toMp3Commands).start().waitFor() == 0) {
+      "Error converting $file to $FILE_ENDING"
     }
+
+    Eye3D.writeImage(mp3)
+
+    file.delete()
+    mp3
+  } else {
+    file
   }
 }

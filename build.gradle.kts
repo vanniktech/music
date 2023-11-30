@@ -13,7 +13,6 @@ rootProject.configure<com.vanniktech.code.quality.tools.CodeQualityToolsPluginEx
   }
   ktlint {
     toolVersion = libs.versions.ktlint.get()
-    experimental = true
   }
   detekt {
     enabled = false // Don't want this.
