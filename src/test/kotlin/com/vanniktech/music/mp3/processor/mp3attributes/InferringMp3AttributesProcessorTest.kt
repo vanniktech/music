@@ -335,12 +335,12 @@ class InferringMp3AttributesProcessorTest {
     assertEquals(
       expected = Mp3Attributes(
         listOf(
-          Mp3Attribute(Mp3Tag.ARTIST, "SES", inferred = true),
-          Mp3Attribute(Mp3Tag.TITLE, "SES", inferred = true),
+          Mp3Attribute(Mp3Tag.ARTIST, null, inferred = false),
+          Mp3Attribute(Mp3Tag.TITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.SUBTITLE, null, inferred = false),
           Mp3Attribute(Mp3Tag.ALBUM, "Melodays 2017", inferred = true),
           Mp3Attribute(Mp3Tag.TRACK, null, inferred = false),
-          Mp3Attribute(Mp3Tag.GENRE, "Mindfuck Hypno", inferred = true),
+          Mp3Attribute(Mp3Tag.GENRE, "Hypno", inferred = true),
           Mp3Attribute(Mp3Tag.YEAR, "2017", inferred = true),
           Mp3Attribute(Mp3Tag.PICTURE, null, inferred = false),
           Mp3Attribute(Mp3Tag.COMPOSER, null, inferred = false),

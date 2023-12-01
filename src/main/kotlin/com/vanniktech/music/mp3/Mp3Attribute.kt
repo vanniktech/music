@@ -7,20 +7,18 @@ package com.vanniktech.music.mp3
   fun getOrNull(tag: Mp3Tag) = firstOrNull { it.tag == tag }
 }
 
-internal fun diff(self: Mp3Attributes, other: Mp3Attributes): List<Mp3AttributeDiff> {
-  return Mp3Tag.parseable().mapNotNull {
-    val selfAttribute = self.getOrNull(it)?.copy(inferred = false)
-    val otherAttribute = other.getOrNull(it)?.copy(inferred = false)
+internal fun diff(self: Mp3Attributes, other: Mp3Attributes): List<Mp3AttributeDiff> = Mp3Tag.parseable().mapNotNull {
+  val selfAttribute = self.getOrNull(it)?.copy(inferred = false)
+  val otherAttribute = other.getOrNull(it)?.copy(inferred = false)
 
-    if (selfAttribute != otherAttribute) {
-      Mp3AttributeDiff(
-        tag = it,
-        old = selfAttribute?.value,
-        new = otherAttribute?.value,
-      )
-    } else {
-      null
-    }
+  if (selfAttribute != otherAttribute) {
+    Mp3AttributeDiff(
+      tag = it,
+      old = selfAttribute?.value,
+      new = otherAttribute?.value,
+    )
+  } else {
+    null
   }
 }
 
@@ -29,9 +27,8 @@ internal data class Mp3AttributeDiff(
   val old: String?,
   val new: String?,
 ) {
-  override fun toString(): String {
-    return "$tag from \"$old\" to \"$new\""
-  }
+  override fun toString() =
+    "$tag from \"$old\" to \"$new\""
 }
 
 internal data class Mp3Attribute(
