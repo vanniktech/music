@@ -27,6 +27,7 @@ internal val albumYearly = setOf(
   "Strawberry Fields Festival",
   "The BPM Festival",
   "Time Warp",
+  "Fairground Festival",
   "Tomorrowland",
   "Wilde Moehre Festival",
   "Zugvøgel Festival",
