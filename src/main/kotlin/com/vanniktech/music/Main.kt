@@ -143,7 +143,7 @@ fun main() {
     }
 
     if (hasAdditions) {
-      diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push \"${it.absolutePath}\" \"$ANDROID_PATH\"" })
+      // diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push \"${it.absolutePath}\" \"$ANDROID_PATH\"" })
       diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "cp \"${it.absolutePath}\" \"$GOOGLE_DRIVE_DIRECTORY\"" })
     }
 
