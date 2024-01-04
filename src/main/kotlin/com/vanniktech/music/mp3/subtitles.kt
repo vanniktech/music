@@ -7,6 +7,7 @@ internal val subtitles = listOf(
   "Crazy", // Only sometimes good.
   "Crowds", // Good for the crowds when listening with others.
   "Dream", // Max Cooper like.
+  "Druck", // Amazing beat.
   "Duduk", // Amazing instrument.
   "Duester", // Mysterious.
   "End", // Takes a while to be good.
