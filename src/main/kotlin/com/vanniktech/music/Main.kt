@@ -34,22 +34,18 @@ import kotlinx.datetime.toLocalDateTime
 import java.io.File
 
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
-private const val GOOGLE_DRIVE_DIRECTORY = "\$GOOGLE_DRIVE/m/"
+private const val PATH_HARD_DRIVE = "/Volumes/Niklas/m"
 
 fun main() {
-  // val root = File("/Volumes/Niklas/m/")
-  val root = File("/Users/niklas/Downloads")
+  val googleDriveDirectory = System.getenv("GOOGLE_DRIVE").takeIfNotBlank()?.let(::File)?.resolve("m") ?: error("Please define a GOOGLE_DRIVE environment variable")
+
+  val root = File(PATH_HARD_DRIVE)
+  // val root = File("/Users/niklas/Downloads")
 
   // Clean up left over images.
   root.listFiles().orEmpty().filter { it.extension in setOf("jpg", "png") }.forEach { it.delete() }
 
-  val files = root
-    .listFiles()
-    .orEmpty()
-    .filterNot { it.isDirectory }
-    .filterNot { it.isHidden }
-    .filterNot { it.name == FRONT_COVER }
-    .sorted()
+  val files = root.listMusicFiles()
 
   val clock = Clock.System
   val now = clock.now()
@@ -139,12 +135,12 @@ fun main() {
 
     if (hasRemovals) {
       diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
-      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "rm -f \"$GOOGLE_DRIVE_DIRECTORY${it.name}\"" })
+      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "rm -f \"${googleDriveDirectory.resolve(it.name)}\"" })
     }
 
     if (hasAdditions) {
       // diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "adb push \"${it.absolutePath}\" \"$ANDROID_PATH\"" })
-      diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "cp \"${it.absolutePath}\" \"$GOOGLE_DRIVE_DIRECTORY\"" })
+      diffFile.appendText(fileAdditions.joinToString(postfix = "\n", separator = "\n") { "cp \"${it.absolutePath}\" \"${googleDriveDirectory.absolutePath}\"" })
     }
 
     if (diffFile.length() > 0) {
@@ -153,4 +149,22 @@ fun main() {
   }
 
   recoverableExceptions.forEach { it.printStackTrace() }
+
+  if (root.absolutePath == PATH_HARD_DRIVE) {
+    val googleDriveFiles = googleDriveDirectory.listMusicFiles()
+    val googleDriveNames = googleDriveFiles.map { it.name }.toSet()
+
+    val fileNames = files.map { it.name }.toSet()
+    val allFileNames = (fileNames + googleDriveNames)
+
+    println((allFileNames - googleDriveNames).joinToString(separator = "\n", prefix = "Files missing in Google Drive:\n"))
+    println((allFileNames - fileNames).joinToString(separator = "\n", prefix = "Files missing on hard drive:\n"))
+  }
 }
+
+fun File.listMusicFiles() = listFiles()
+  .orEmpty()
+  .filterNot { it.isDirectory }
+  .filterNot { it.isHidden }
+  .filterNot { it.name == FRONT_COVER }
+  .sorted()
