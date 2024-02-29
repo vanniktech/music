@@ -36,6 +36,10 @@ application {
 
 defaultTasks("run")
 
+tasks.named<JavaExec>("run") {
+  standardInput = System.`in`
+}
+
 kotlin {
   jvmToolchain {
     languageVersion.set(JavaLanguageVersion.of(18))
