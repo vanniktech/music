@@ -28,7 +28,7 @@ internal class Id3V2Mp3AttributesHandler : Mp3AttributesHandler {
       Eye3D.extractImageFrom(file)
 
       Mp3Attributes(
-        Mp3Tag.values().map {
+        Mp3Tag.entries.map {
           val value = when (it) {
             Mp3Tag.PICTURE -> "exists"
             else -> null

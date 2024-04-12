@@ -14,7 +14,7 @@ internal val subtitles = listOf(
   "Flauschig", // Hrhr.
   "Gaensehaut", // Sets the mood.
   "Geil", // Amazing.
-  "Gezerre", // Holy.
+  "Gezerre", // Holy. Both ballern & slow.
   "Good", // Just good.
   "Groovy", // Just good groves.
   "Hypno", // Dreaming.

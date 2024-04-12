@@ -157,7 +157,7 @@ fun main() {
     val fileNames = files.map { it.name }.toSet()
     val allFileNames = (fileNames + googleDriveNames)
 
-    println((allFileNames - googleDriveNames).joinToString(separator = "\n", prefix = "Files missing in Google Drive:\n"))
+    println((allFileNames - googleDriveNames).joinToString(separator = "\n", prefix = "\nFiles missing in Google Drive:\n"))
     println((allFileNames - fileNames).joinToString(separator = "\n", prefix = "Files missing on hard drive:\n"))
   }
 }

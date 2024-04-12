@@ -38,7 +38,7 @@ internal fun modifyAttributes(
 
   val input = readln()
   val answer = input.split("=")
-  val tag = Mp3Tag.values().firstOrNull { it.name.lowercase() == answer[0].lowercase() } ?: error("Wrong input: $input, should be: name=<value>")
+  val tag = Mp3Tag.entries.firstOrNull { it.name.lowercase() == answer[0].lowercase() } ?: error("Wrong input: $input, should be: name=<value>")
 
   Mp3Attribute(
     tag = tag,
@@ -136,12 +136,17 @@ internal fun String.autoCorrected() = trim()
   .replace("Dec.", "December ", ignoreCase = true)
   // Numbering
   .replace("down.cast °", "down.cast #", ignoreCase = true)
+  .replace("Schleichcast°", "Schleichcast #", ignoreCase = true)
   .replace(" Vol. ", "#", ignoreCase = true)
   .replace(" Nr. ", "#", ignoreCase = true)
   .replace("- #", "#", ignoreCase = true)
   // Audio quality.
   .replace("(320kbps)", "")
   // Fix some Artists / Podcasts.
+  .replace("rāga", "raga", ignoreCase = true)
+  .replace("T⨋₼₱L⨊₡ĄS৳", "Templecast", ignoreCase = true)
+  .replace("cedd fuze", "CeddFUZE", ignoreCase = true)
+  .replace("ceddfuze", "CeddFUZE", ignoreCase = true)
   .replace("súlfur", "sulfur", ignoreCase = true)
   .replace("Hrααch", "Hraach", ignoreCase = true)
   .replace("Mușză", "Musza", ignoreCase = true)
@@ -215,6 +220,7 @@ internal fun String.autoCorrected() = trim()
   .replace(" (The lost Show)", "", ignoreCase = true)
   .replace("Nɨxe", "Nixe", ignoreCase = true)
   .replace("ᏗrutanᎥ", "Arutani", ignoreCase = true)
+  .replace("Ƞɑʈure", "nature", ignoreCase = true)
   .replace("Ꮧru", "Aru", ignoreCase = true)
   .replace("Gun⁄lla", "Gunilla", ignoreCase = true)
   .replace("My set from Warm Up", "My Set From Warm Up", ignoreCase = true)
