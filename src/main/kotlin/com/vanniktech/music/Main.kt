@@ -39,8 +39,8 @@ private const val PATH_HARD_DRIVE = "/Volumes/Niklas/m"
 fun main() {
   val googleDriveDirectory = System.getenv("GOOGLE_DRIVE").takeIfNotBlank()?.let(::File)?.resolve("m") ?: error("Please define a GOOGLE_DRIVE environment variable")
 
-  val root = File(PATH_HARD_DRIVE)
-  // val root = File("/Users/niklas/Downloads")
+  val downloads = File("/Users/niklas/Downloads")
+  val root = downloads.takeIf { it.listMusicFiles().isNotEmpty() } ?: File(PATH_HARD_DRIVE)
 
   // Clean up left over images.
   root.listFiles().orEmpty().filter { it.extension in setOf("jpg", "png") }.forEach { it.delete() }
