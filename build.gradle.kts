@@ -42,7 +42,7 @@ tasks.named<JavaExec>("run") {
 
 kotlin {
   jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(18))
+    languageVersion.set(JavaLanguageVersion.of(17))
   }
 }
 

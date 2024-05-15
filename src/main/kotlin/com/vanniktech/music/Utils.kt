@@ -257,6 +257,7 @@ internal fun String.autoCorrected() = trim()
   .replace(" — .mp3", ".mp3")
   .replace(" —.mp3", ".mp3")
   .replace("\"\"", "")
+  .replace("|", "|")
   .replace("Café", "Cafe")
   // Fix some accents.
   .replace("""é""", """é""")

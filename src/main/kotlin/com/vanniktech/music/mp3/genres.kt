@@ -32,6 +32,6 @@ internal val genres = setOf(
   "Tech House",
   "Techno",
   "Trance Classics",
-  "Uta",
+  "Hardtrance",
   "Warmup", // Remnants.
 )
