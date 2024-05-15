@@ -223,4 +223,5 @@ internal val albumsWithTracks = setOf(
   "Einmusika Podcast",
   "Club Autonomica in the mix Podcast",
   "raga",
+  "Serafin Sinfonia",
 )
