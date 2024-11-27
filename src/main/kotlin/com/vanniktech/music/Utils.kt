@@ -144,6 +144,7 @@ internal fun String.autoCorrected() = trim()
   .replace("(320kbps)", "")
   // Fix some Artists / Podcasts.
   .replace("rāga", "raga", ignoreCase = true)
+  .replace("luçïd", "lucid", ignoreCase = true)
   .replace("T⨋₼₱L⨊₡ĄS৳", "Templecast", ignoreCase = true)
   .replace("cedd fuze", "CeddFUZE", ignoreCase = true)
   .replace("ceddfuze", "CeddFUZE", ignoreCase = true)
@@ -268,6 +269,7 @@ internal fun String.autoCorrected() = trim()
   .replace("❖", "")
   .replace("+", "")
   .replace("☆", "")
+  .replace("�", "")
   .replace("""🌀""", "")
   .map {
     when (it) {

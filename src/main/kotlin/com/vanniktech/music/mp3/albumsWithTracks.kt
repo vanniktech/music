@@ -40,6 +40,7 @@ internal val albumsWithTracks = setOf(
   "My Tribute Mixtape Series",
   "Deep Session",
   "Deep & Sexy Podcast",
+  "Raus aus den Federn",
   "Ki Cast",
   "Introduction",
   "Dilate Podcast",
