@@ -33,6 +33,7 @@ internal val albumsWithoutTracks = setOf(
   "Travel Without Moving",
   "Unity Live",
   "WUITW",
+  "Noises Of",
   "Warm Up London",
   "Watergate Berlin",
   "driving slowly",

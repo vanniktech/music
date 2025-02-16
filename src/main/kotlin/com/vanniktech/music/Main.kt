@@ -134,7 +134,7 @@ fun main() {
     }
 
     if (hasRemovals) {
-      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "adb shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
+      diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "adb -d shell \"rm -f '$ANDROID_PATH${it.name}'\"" })
       diffFile.appendText(fileRemovals.joinToString(postfix = "\n", separator = "\n") { "rm -f \"${googleDriveDirectory.resolve(it.name)}\"" })
     }
 
