@@ -242,6 +242,7 @@ internal fun String.autoCorrected() = trim()
   .replace("：", " -")
   .replace("-  ", "- ")
   .replace(" • ", " ")
+  .replace("•", "")
   .replace(" - .mp3", ".mp3")
   .replace(" -.mp3", ".mp3")
   .replace(" .mp3", ".mp3")
@@ -272,7 +273,8 @@ internal fun String.autoCorrected() = trim()
   .replace("+", "")
   .replace("☆", "")
   .replace("�", "")
-  .replace("""🌀""", "")
+  .replace("۞", "")
+  .replace("⧸", "")
   .map {
     when (it) {
       // Normal characters.
@@ -298,3 +300,5 @@ internal fun String.autoCorrected() = trim()
   .joinToString(separator = "")
   .replace(REGEX_DOUBLE_SPACINGS, " ")
   .trim()
+
+internal fun extractImageUrlFromString(input: String) = Regex("https://.*?(?=&)").find(input)?.value?.replace("\\", "") ?: input.takeIf { it.startsWith("https://") }

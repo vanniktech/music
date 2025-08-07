@@ -48,6 +48,7 @@ kotlin {
 
 dependencies {
   implementation(libs.kotlinx.datetime)
+  implementation(libs.ktor.client.okhttp)
 }
 
 dependencies {

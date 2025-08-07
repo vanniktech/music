@@ -12,7 +12,7 @@ import com.vanniktech.music.mp3.handler.FRONT_COVER
 import com.vanniktech.music.mp3.handler.Id3V2Mp3AttributesHandler
 import com.vanniktech.music.mp3.processor.file.FileNamePreFileProcessor
 import com.vanniktech.music.mp3.processor.file.WavToMp3FileProcessor
-import com.vanniktech.music.mp3.processor.mp3.MissingPictureTrackMp3Processor
+import com.vanniktech.music.mp3.processor.mp3.RenameMp3Processor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumTrackMismatchMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.ArtistMp3AttributesProcessor
@@ -22,12 +22,13 @@ import com.vanniktech.music.mp3.processor.mp3attributes.ClearMp3TagsAttributesPr
 import com.vanniktech.music.mp3.processor.mp3attributes.GenreMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.InferringMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
-import com.vanniktech.music.mp3.processor.mp3attributes.RenameMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.SubtitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TitleMismatchMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TitleMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.TrackMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.YearMp3AttributesProcessor
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -36,7 +37,7 @@ import java.io.File
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 private const val PATH_HARD_DRIVE = "/Volumes/Niklas/m"
 
-fun main() {
+suspend fun main() {
   val googleDriveDirectory = System.getenv("GOOGLE_DRIVE").takeIfNotBlank()?.let(::File)?.resolve("m") ?: error("Please define a GOOGLE_DRIVE environment variable")
 
   val downloads = File("/Users/niklas/Downloads")
@@ -61,8 +62,12 @@ fun main() {
   val localDate = now.toLocalDateTime(timeZone).date
   val attributesHandler = Id3V2Mp3AttributesHandler()
 
+  val httpClientEngine = OkHttp.create {}
+  val httpClient = HttpClient(
+    engine = httpClientEngine,
+  )
   val preFileProcessors = listOf(
-    WavToMp3FileProcessor(logger = logger),
+    WavToMp3FileProcessor(logger = logger, httpClient = httpClient),
     FileNamePreFileProcessor(logger = logger, autoCorrect = false),
   )
 
@@ -84,8 +89,7 @@ fun main() {
   )
 
   val mp3Processors = listOf(
-    MissingPictureTrackMp3Processor(),
-    RenameMp3AttributesProcessor(logger = logger),
+    RenameMp3Processor(logger = logger),
   )
 
   val recoverableExceptions = mutableListOf<RecoverableException>()
@@ -160,6 +164,9 @@ fun main() {
     println((allFileNames - googleDriveNames).joinToString(separator = "\n", prefix = "\nFiles missing in Google Drive:\n"))
     println((allFileNames - fileNames).joinToString(separator = "\n", prefix = "Files missing on hard drive:\n"))
   }
+
+  httpClient.close()
+  httpClientEngine.close()
 }
 
 fun File.listMusicFiles() = listFiles()

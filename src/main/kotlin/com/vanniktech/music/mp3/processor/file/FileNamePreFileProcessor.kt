@@ -12,7 +12,7 @@ internal class FileNamePreFileProcessor(
 ) : PreFileProcessor {
   private var index = 0
 
-  override fun process(file: File): File {
+  override suspend fun process(file: File): File {
     require(file.extension == FILE_ENDING) { "Expected $FILE_ENDING. Invalid extension at $file" }
 
     return if (autoCorrect) {

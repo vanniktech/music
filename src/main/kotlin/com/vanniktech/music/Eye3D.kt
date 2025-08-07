@@ -40,6 +40,6 @@ internal object Eye3D {
       }
     }
   }
-
-  private fun File.frontCoverFile() = parentFile.resolve("$nameWithoutExtension.jpg")
 }
+
+internal fun File.frontCoverFile() = parentFile.resolve("$nameWithoutExtension.jpg")

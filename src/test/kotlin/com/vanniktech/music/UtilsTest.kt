@@ -4,6 +4,23 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class UtilsTest {
+  @Test fun extractImageUrlFromString() {
+    assertEquals(
+      expected = null,
+      actual = extractImageUrlFromString("foo"),
+    )
+
+    assertEquals(
+      expected = "https://i1.sndcdn.com/artworks-tdCceW5y1FlKzBkI-zWjPOA-t1080x1080.jpg",
+      actual = extractImageUrlFromString("https://i1.sndcdn.com/artworks-tdCceW5y1FlKzBkI-zWjPOA-t1080x1080.jpg"),
+    )
+
+    assertEquals(
+      expected = "https://i1.sndcdn.com/artworks-tdCceW5y1FlKzBkI-zWjPOA-t1080x1080.jpg",
+      actual = extractImageUrlFromString("background-image: url(&quot;https://i1.sndcdn.com/artworks-tdCceW5y1FlKzBkI-zWjPOA-t1080x1080.jpg&quot;); opacity: 1;"),
+    )
+  }
+
   @Test fun prependTrack() {
     assertEquals(expected = "#001", actual = "1".prependTrack())
     assertEquals(expected = "#010", actual = "10".prependTrack())
