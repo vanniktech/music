@@ -11,21 +11,20 @@ internal class YearMp3AttributesProcessor(
   private val localDate: LocalDate,
   private val mandatory: Boolean,
 ) : Mp3AttributesProcessor {
-  override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes =
-    attributes.map(Mp3Tag.YEAR) { year ->
-      val isMissing = year.value.asYear() == null && mandatory
+  override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes = attributes.map(Mp3Tag.YEAR) { year ->
+    val isMissing = year.value.asYear() == null && mandatory
 
-      if (isMissing) {
-        modifyAttributes(
-          source = source,
-          attributes = listOf(year),
-          allAttributes = attributes,
-          mandatory = true,
-        )
-      } else {
-        year
-      }
+    if (isMissing) {
+      modifyAttributes(
+        source = source,
+        attributes = listOf(year),
+        allAttributes = attributes,
+        mandatory = true,
+      )
+    } else {
+      year
     }
+  }
 
   private fun String?.asYear() = this?.toIntOrNull()?.takeIf { it in 1995..localDate.year }
 }

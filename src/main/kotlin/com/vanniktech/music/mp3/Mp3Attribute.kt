@@ -27,8 +27,7 @@ internal data class Mp3AttributeDiff(
   val old: String?,
   val new: String?,
 ) {
-  override fun toString() =
-    "$tag from \"$old\" to \"$new\""
+  override fun toString() = "$tag from \"$old\" to \"$new\""
 }
 
 internal data class Mp3Attribute(
@@ -42,12 +41,11 @@ internal data class Mp3Attribute(
   }
 }
 
-internal fun Mp3Attributes.map(tag: Mp3Tag, function: ((Mp3Attribute) -> Mp3Attribute)): Mp3Attributes =
-  Mp3Attributes(
-    map {
-      when (it.tag) {
-        tag -> function.invoke(it)
-        else -> it
-      }
-    },
-  )
+internal fun Mp3Attributes.map(tag: Mp3Tag, function: ((Mp3Attribute) -> Mp3Attribute)): Mp3Attributes = Mp3Attributes(
+  map {
+    when (it.tag) {
+      tag -> function.invoke(it)
+      else -> it
+    }
+  },
+)

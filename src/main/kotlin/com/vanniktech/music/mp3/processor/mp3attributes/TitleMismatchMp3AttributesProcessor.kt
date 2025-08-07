@@ -17,67 +17,66 @@ import com.vanniktech.music.track
 import com.vanniktech.music.trim
 
 internal class TitleMismatchMp3AttributesProcessor : Mp3AttributesProcessor {
-  override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes =
-    attributes.map(Mp3Tag.TITLE) { attribute ->
-      val artist = attributes.get(Mp3Tag.ARTIST)
-      val album = attributes.get(Mp3Tag.ALBUM)
-      val track = attributes.get(Mp3Tag.TRACK)
-      val year = attributes.get(Mp3Tag.YEAR).value
-      val title = attribute.value?.replace(attributes.get(Mp3Tag.SUBTITLE).value?.plus(" - ")?.trim().orEmpty(), "")
+  override fun process(source: Source, attributes: Mp3Attributes): Mp3Attributes = attributes.map(Mp3Tag.TITLE) { attribute ->
+    val artist = attributes.get(Mp3Tag.ARTIST)
+    val album = attributes.get(Mp3Tag.ALBUM)
+    val track = attributes.get(Mp3Tag.TRACK)
+    val year = attributes.get(Mp3Tag.YEAR).value
+    val title = attribute.value?.replace(attributes.get(Mp3Tag.SUBTITLE).value?.plus(" - ")?.trim().orEmpty(), "")
 
-      val viaAlbum = (albumsWithTracks + albumsWithoutTracks).firstNotNullOfOrNull { value ->
-        value.takeIf {
-          title?.specialContains(it) == true
-        }
-      }
-      val viaAlbumYearly = albumYearly.firstNotNullOfOrNull { value ->
-        "$value $year".takeIf {
-          val regex = Regex(it)
-          regex.containsMatchIn(title.orEmpty())
-        }
-      }
-
-      val isDifferentViaLive = source.name.contains("live", ignoreCase = true) && !source.name.contains("oliver", ignoreCase = true) && !source.name.contains("Elliver", ignoreCase = true) && title?.contains("live", ignoreCase = true) == false
-      val isDifferentViaTrack = !track.value.isNullOrBlank() && track.value != title?.track()?.cleanTrack()
-      val isDifferentViaAlbum = (viaAlbum ?: viaAlbumYearly) != album.value
-      val containsArtist = title?.contains(artist.value!!, ignoreCase = true) == true && artist.value != "Places" && artist.value != "Solstice"
-      val doesNotContainAlbumTrack = when {
-        album.value != null && !track.value.isNullOrBlank() -> title?.contains("${album.value} ${track.value.prependTrack()}") == false
-        else -> false
-      }
-
-      val isDifferent = (containsArtist || isDifferentViaLive || isDifferentViaAlbum || isDifferentViaTrack || doesNotContainAlbumTrack)
-
-      if (isDifferent) {
-        val inferredTitle = title.takeIf { isDifferentViaLive && album.value == null }
-        val value = (
-          listOfNotNull(
-            "Live -".takeIf { inferredTitle != null } ?: "Live @".takeIf { isDifferentViaLive },
-            album.value,
-            track.value?.prependTrack(),
-            inferredTitle,
-          )
-            .joinToString(separator = " ")
-            .takeIfNotBlank() ?: title.orEmpty().trim(artist.value.orEmpty())
-          )
-          .trim()
-          .trim("&")
-          .trim("-")
-          .trim("@")
-          .replace(artist.value.orEmpty(), "", ignoreCase = true)
-          .replace(REGEX_DOUBLE_SPACINGS, " ")
-          .trim("at")
-          .trim("by")
-          .trim("von")
-
-        modifyAttributes(
-          source = source,
-          attributes = listOf(attribute.copy(value = value, inferred = true)),
-          allAttributes = attributes,
-          mandatory = true,
-        )
-      } else {
-        attribute
+    val viaAlbum = (albumsWithTracks + albumsWithoutTracks).firstNotNullOfOrNull { value ->
+      value.takeIf {
+        title?.specialContains(it) == true
       }
     }
+    val viaAlbumYearly = albumYearly.firstNotNullOfOrNull { value ->
+      "$value $year".takeIf {
+        val regex = Regex(it)
+        regex.containsMatchIn(title.orEmpty())
+      }
+    }
+
+    val isDifferentViaLive = source.name.contains("live", ignoreCase = true) && !source.name.contains("oliver", ignoreCase = true) && !source.name.contains("Elliver", ignoreCase = true) && title?.contains("live", ignoreCase = true) == false
+    val isDifferentViaTrack = !track.value.isNullOrBlank() && track.value != title?.track()?.cleanTrack()
+    val isDifferentViaAlbum = (viaAlbum ?: viaAlbumYearly) != album.value
+    val containsArtist = title?.contains(artist.value!!, ignoreCase = true) == true && artist.value != "Places" && artist.value != "Solstice"
+    val doesNotContainAlbumTrack = when {
+      album.value != null && !track.value.isNullOrBlank() -> title?.contains("${album.value} ${track.value.prependTrack()}") == false
+      else -> false
+    }
+
+    val isDifferent = (containsArtist || isDifferentViaLive || isDifferentViaAlbum || isDifferentViaTrack || doesNotContainAlbumTrack)
+
+    if (isDifferent) {
+      val inferredTitle = title.takeIf { isDifferentViaLive && album.value == null }
+      val value = (
+        listOfNotNull(
+          "Live -".takeIf { inferredTitle != null } ?: "Live @".takeIf { isDifferentViaLive },
+          album.value,
+          track.value?.prependTrack(),
+          inferredTitle,
+        )
+          .joinToString(separator = " ")
+          .takeIfNotBlank() ?: title.orEmpty().trim(artist.value.orEmpty())
+        )
+        .trim()
+        .trim("&")
+        .trim("-")
+        .trim("@")
+        .replace(artist.value.orEmpty(), "", ignoreCase = true)
+        .replace(REGEX_DOUBLE_SPACINGS, " ")
+        .trim("at")
+        .trim("by")
+        .trim("von")
+
+      modifyAttributes(
+        source = source,
+        attributes = listOf(attribute.copy(value = value, inferred = true)),
+        allAttributes = attributes,
+        mandatory = true,
+      )
+    } else {
+      attribute
+    }
+  }
 }

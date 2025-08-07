@@ -24,8 +24,7 @@ enum class Mp3Tag(
   PRIVATE_FRAME(id = "PRIV"),
   ;
 
-  override fun toString() =
-    name.lowercase()
+  override fun toString() = name.lowercase()
 
   companion object {
     fun parseable() = values().toList().minus(PRIVATE_FRAME)
