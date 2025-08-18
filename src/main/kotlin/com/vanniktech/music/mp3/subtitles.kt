@@ -29,6 +29,7 @@ internal val subtitles = listOf(
   "Sleep", // Predestined for falling asleep.
   "Treibend", // Continuous good flow.
   "Uta", // Uta.
+  "Luisa", // Luisa.
   "Viby", // Just good vibes, more pushing than Groovy though!
   "Vocals", // Lots of vocals.
   "Work", // Predestined for focused work.

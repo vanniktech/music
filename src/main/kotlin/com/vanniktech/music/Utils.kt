@@ -7,8 +7,19 @@ import com.vanniktech.music.mp3.SUBTITLE_TODO_PREFIX
 import com.vanniktech.music.mp3.Source
 import com.vanniktech.music.mp3.processor.file.FILE_ENDING
 import com.vanniktech.music.mp3.processor.mp3attributes.RecoverableException
+import io.ktor.client.HttpClient
+import io.ktor.client.request.prepareGet
+import io.ktor.client.request.url
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.readRemaining
+import kotlinx.io.readByteArray
+import okio.Sink
+import okio.buffer
+import okio.sink
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import java.io.File
 import java.time.LocalDate
 
 internal val REGEX_DOUBLE_SPACINGS = Regex(" {2,}")
@@ -302,3 +313,38 @@ internal fun String.autoCorrected() = trim()
   .trim()
 
 internal fun extractImageUrlFromString(input: String) = Regex("https://.*?(?=&)").find(input)?.value?.replace("\\", "") ?: input.takeIf { it.startsWith("https://") }
+
+internal suspend fun askDownloadImageFile(
+  file: File,
+  httpClient: HttpClient,
+) {
+  val answer = readln()
+  val image = extractImageUrlFromString(answer)
+
+  if (image == null) {
+    error("Could not find an image url from $answer")
+  } else {
+    httpClient.prepareGet {
+      url(image)
+    }.execute {
+      it.bodyAsChannel().readFully(file.frontCoverFile().sink())
+    }
+  }
+}
+
+// Okio likes to use 8kb:
+// https://github.com/square/okio/blob/a94c678de4e8a21e53126d42a1a3d897daa56a4a/recipes/index.html#L1322
+private const val OKIO_RECOMMENDED_BUFFER_SIZE: Int = 8192
+
+@Suppress("NAME_SHADOWING")
+private suspend fun ByteReadChannel.readFully(sink: Sink) {
+  val channel = this
+  sink.buffer().use { sink ->
+    while (!channel.isClosedForRead) {
+      val packet = channel.readRemaining(OKIO_RECOMMENDED_BUFFER_SIZE.toLong())
+      while (!packet.exhausted()) {
+        sink.write(packet.readByteArray())
+      }
+    }
+  }
+}

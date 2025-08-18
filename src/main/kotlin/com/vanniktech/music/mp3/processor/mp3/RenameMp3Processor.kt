@@ -9,7 +9,7 @@ import com.vanniktech.music.takeIfNotBlank
 internal class RenameMp3Processor(
   private val logger: Logger,
 ) : Mp3Processor {
-  override fun process(mp3: Mp3, index: Int): Mp3 {
+  override suspend fun process(mp3: Mp3, index: Int): Mp3 {
     val file = mp3.file
     val currentName = file.name
     val subtitleString = when (val subtitle = mp3.attributes.get(Mp3Tag.SUBTITLE).value.takeIfNotBlank()) {

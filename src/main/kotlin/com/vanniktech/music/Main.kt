@@ -12,6 +12,7 @@ import com.vanniktech.music.mp3.handler.FRONT_COVER
 import com.vanniktech.music.mp3.handler.Id3V2Mp3AttributesHandler
 import com.vanniktech.music.mp3.processor.file.FileNamePreFileProcessor
 import com.vanniktech.music.mp3.processor.file.WavToMp3FileProcessor
+import com.vanniktech.music.mp3.processor.mp3.MissingPictureTrackMp3Processor
 import com.vanniktech.music.mp3.processor.mp3.RenameMp3Processor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumMp3AttributesProcessor
 import com.vanniktech.music.mp3.processor.mp3attributes.AlbumTrackMismatchMp3AttributesProcessor
@@ -90,6 +91,7 @@ suspend fun main() {
 
   val mp3Processors = listOf(
     RenameMp3Processor(logger = logger),
+    MissingPictureTrackMp3Processor(logger = logger, httpClient = httpClient),
   )
 
   val recoverableExceptions = mutableListOf<RecoverableException>()
