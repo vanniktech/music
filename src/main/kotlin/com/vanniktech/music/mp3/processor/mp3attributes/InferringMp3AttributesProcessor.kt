@@ -94,6 +94,8 @@ internal class InferringMp3AttributesProcessor : Mp3AttributesProcessor {
           Mp3Tag.POSITION -> null
           Mp3Tag.PICTURE -> null
           Mp3Tag.PRIVATE_FRAME -> null
+          Mp3Tag.CUSTOM_TAG -> null
+          Mp3Tag.ENCODER_SETTINGS -> null
         }
 
         attributes.firstOrNull { it.tag == key && it.value != null } ?: Mp3Attribute(

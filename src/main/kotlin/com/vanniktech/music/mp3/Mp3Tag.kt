@@ -22,6 +22,8 @@ enum class Mp3Tag(
 
   /** We know about this, but we don't parse it. */
   PRIVATE_FRAME(id = "PRIV"),
+  CUSTOM_TAG(id = "TXXX"),
+  ENCODER_SETTINGS(id = "TSSE"),
   ;
 
   override fun toString() = name.lowercase()

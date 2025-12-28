@@ -50,6 +50,8 @@ internal class Id3V2Mp3AttributesHandlerTest {
         Mp3Attribute(Mp3Tag.POSITION, null, inferred = false),
         Mp3Attribute(Mp3Tag.ARTIST_2, null, inferred = false),
         Mp3Attribute(Mp3Tag.COMMENTS, null, inferred = false),
+        Mp3Attribute(Mp3Tag.CUSTOM_TAG, null, inferred = false),
+        Mp3Attribute(Mp3Tag.ENCODER_SETTINGS, null, inferred = false),
       ),
       actual = mp3Handler.fromString(
         """
@@ -82,6 +84,8 @@ internal class Id3V2Mp3AttributesHandlerTest {
         Mp3Attribute(Mp3Tag.POSITION, "0/0", inferred = false),
         Mp3Attribute(Mp3Tag.ARTIST_2, null, inferred = false),
         Mp3Attribute(Mp3Tag.COMMENTS, null, inferred = false),
+        Mp3Attribute(Mp3Tag.CUSTOM_TAG, null, inferred = false),
+        Mp3Attribute(Mp3Tag.ENCODER_SETTINGS, null, inferred = false),
       ),
       actual = mp3Handler.fromString(
         """
@@ -119,6 +123,8 @@ internal class Id3V2Mp3AttributesHandlerTest {
         Mp3Attribute(Mp3Tag.POSITION, "0/0", inferred = false),
         Mp3Attribute(Mp3Tag.ARTIST_2, null, inferred = false),
         Mp3Attribute(Mp3Tag.COMMENTS, "F�r die Ewigwachgebliebenen", inferred = false),
+        Mp3Attribute(Mp3Tag.CUSTOM_TAG, null, inferred = false),
+        Mp3Attribute(Mp3Tag.ENCODER_SETTINGS, null, inferred = false),
       ),
       actual = mp3Handler.fromString(
         """
