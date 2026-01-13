@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.3.0"
-ktlint = "1.7.1"
+ktlint = "1.8.0"
 ktor = "3.3.3"
 
 [libraries]
@@ -9,5 +9,5 @@ kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2"
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
 [plugins]
-codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.24.0" }
+codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.25.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

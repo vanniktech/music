@@ -14,9 +14,6 @@ rootProject.configure<com.vanniktech.code.quality.tools.CodeQualityToolsPluginEx
   ktlint {
     toolVersion = libs.versions.ktlint.get()
   }
-  detekt {
-    enabled = false // Don't want this.
-  }
   cpd {
     enabled = false // Kotlin only.
   }
