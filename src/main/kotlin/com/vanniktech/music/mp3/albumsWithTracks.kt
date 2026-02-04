@@ -31,6 +31,7 @@ internal val albumsWithTracks = setOf(
   "Eduard Aldente",
   "Select Cuts",
   "Serafin Sinfonia",
+  "Finepod",
   "Melodic Diggers",
   "Neomusic Podcast",
   "Witchtape",
