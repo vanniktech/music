@@ -36,6 +36,7 @@ internal val albumsWithTracks = setOf(
   "Neomusic Podcast",
   "Witchtape",
   "Traumcast",
+  "Needle Exchange",
   "HS",
   "DGTL Podcast",
   "Seasidetrip",
