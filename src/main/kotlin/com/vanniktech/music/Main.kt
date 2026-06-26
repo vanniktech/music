@@ -30,10 +30,10 @@ import com.vanniktech.music.mp3.processor.mp3attributes.TrackMp3AttributesProces
 import com.vanniktech.music.mp3.processor.mp3attributes.YearMp3AttributesProcessor
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.io.File
+import kotlin.time.Clock
 
 private const val ANDROID_PATH = "/storage/emulated/0/Music/m/"
 private const val PATH_HARD_DRIVE = "/Volumes/Niklas/m"
