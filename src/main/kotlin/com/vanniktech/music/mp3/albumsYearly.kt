@@ -17,6 +17,7 @@ internal val albumYearly = setOf(
   "Melodays",
   "Melt",
   "Nature One",
+  "Skalar Festival",
   "Playground",
   "Freedom Festival",
   "Pleinvrees Festival",
